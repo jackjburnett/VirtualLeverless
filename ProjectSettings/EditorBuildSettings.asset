@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/VirtualLeverless.unity
+    guid: be38af0800404d84bbf9ef07017bd7f6
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: ffec19c0847c2f54a860418a47a80d40, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 2767a8c92194ee64c8a0113ba07807e2, type: 2}

@@ -4,6 +4,7 @@ public class ClickAreaLogger : MonoBehaviour
 {
     void Update()
     {
+        Debug.developerConsoleVisible = true;
         if (Input.GetMouseButtonDown(0))
         {
             // Get mouse position in screen coordinates

@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class ThemeManager : MonoBehaviour
 {
     public ThemeColours themeColours;
     public Image background;
-    public Text[] texts;
+    public TextMeshProUGUI[] texts;
     public Button[] buttons;
 
     private bool _isDarkMode;
@@ -37,7 +38,7 @@ public class ThemeManager : MonoBehaviour
         }
 
         // Update text colours
-        foreach (Text text in texts)
+        foreach (TextMeshProUGUI text in texts)
         {
             if (currentThemeColours.TryGetValue("text", out var textColour))
             {

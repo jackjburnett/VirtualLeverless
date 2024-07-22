@@ -9,6 +9,7 @@ public class ThemeManager : MonoBehaviour
     public Image background;
     public TextMeshProUGUI[] texts;
     public Button[] buttons;
+    public TextMeshProUGUI[] buttonTexts;
 
     private bool _isDarkMode;
 
@@ -57,6 +58,10 @@ public class ThemeManager : MonoBehaviour
             }
         }
 
-        // You can extend this to update other UI elements as needed
+        // Update button text colours
+        foreach (TextMeshProUGUI buttonText in buttonTexts)
+        {
+            buttonText.color = backgroundColour;
+        }
     }
 }

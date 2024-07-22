@@ -1006,6 +1006,9 @@ MonoBehaviour:
   buttons:
   - {fileID: 1348840268}
   - {fileID: 761370983}
+  buttonTexts:
+  - {fileID: 157209853}
+  - {fileID: 1110811791}
 --- !u!4 &790973247
 Transform:
   m_ObjectHideFlags: 0

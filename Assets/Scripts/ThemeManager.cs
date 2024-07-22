@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using TMPro;
 
 public class ThemeManager : MonoBehaviour
@@ -13,7 +12,7 @@ public class ThemeManager : MonoBehaviour
 
     private bool _isDarkMode;
 
-    void Start()
+    private void Start()
     {
         // Initialize the theme based on saved preferences
         // Assuming PlayerPrefs is used to save the user's preference
@@ -30,7 +29,7 @@ public class ThemeManager : MonoBehaviour
 
     private void UpdateTheme()
     {
-        Dictionary<string, Color> currentThemeColours = _isDarkMode ? themeColours.DarkThemeColours : themeColours.LightThemeColours;
+        var currentThemeColours = _isDarkMode ? themeColours.DarkThemeColours : themeColours.LightThemeColours;
 
         // Update background colour
         if (currentThemeColours.TryGetValue("background", out var backgroundColour))
@@ -39,29 +38,33 @@ public class ThemeManager : MonoBehaviour
         }
 
         // Update text colours
-        foreach (TextMeshProUGUI text in texts)
+        if (currentThemeColours.TryGetValue("text", out var textColour))
         {
-            if (currentThemeColours.TryGetValue("text", out var textColour))
+            foreach (var text in texts)
             {
+            
                 text.color = textColour;
             }
         }
 
         // Update button colors (example: changing only the normal color)
-        foreach (Button button in buttons)
+        if (currentThemeColours.TryGetValue("button", out var buttonColour))
         {
-            if (currentThemeColours.TryGetValue("button", out var buttonColour))
+            foreach (var button in buttons)
             {
-                ColorBlock colors = button.colors;
+            
+                var colors = button.colors;
                 colors.normalColor = buttonColour;
                 button.colors = colors;
             }
         }
 
         // Update button text colours
-        foreach (TextMeshProUGUI buttonText in buttonTexts)
+        if (!currentThemeColours.TryGetValue("border", out var borderColour)) return;
+        foreach (var buttonText in buttonTexts)
         {
-            buttonText.color = backgroundColour;
+            
+            buttonText.color = borderColour;
         }
     }
 }

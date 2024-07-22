@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/VirtualLeverless.unity
+    path: Assets/Scenes/VirtualLeverless.unity
     guid: be38af0800404d84bbf9ef07017bd7f6
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: ffec19c0847c2f54a860418a47a80d40, type: 2}

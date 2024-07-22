@@ -1720,6 +1720,17 @@ MonoBehaviour:
   buttons:
   - {fileID: 1348840268}
   - {fileID: 761370983}
+  - {fileID: 1977176867}
+  - {fileID: 572318031}
+  - {fileID: 1160122409}
+  - {fileID: 7062726}
+  - {fileID: 1591952060}
+  - {fileID: 1670519935}
+  - {fileID: 743901072}
+  - {fileID: 1376753370}
+  - {fileID: 1380423694}
+  - {fileID: 1476973994}
+  - {fileID: 1047225473}
   buttonTexts:
   - {fileID: 157209853}
   - {fileID: 1110811791}
@@ -2100,7 +2111,7 @@ GameObject:
   - component: {fileID: 1047225474}
   - component: {fileID: 1047225473}
   m_Layer: 5
-  m_Name: Button (5)
+  m_Name: rename test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

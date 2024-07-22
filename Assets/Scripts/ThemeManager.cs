@@ -55,6 +55,10 @@ public class ThemeManager : MonoBehaviour
             
                 var colors = button.colors;
                 colors.normalColor = buttonColour;
+                // colors.pressedColor = textColour;
+                // colors.selectedColor = textColour;
+                // colors.disabledColor = disabledColor;
+                colors.highlightedColor = textColour;
                 button.colors = colors;
             }
         }

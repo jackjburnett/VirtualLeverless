@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MenuToggle : MonoBehaviour
 {
@@ -11,8 +10,47 @@ public class MenuToggle : MonoBehaviour
 
     private void Start()
     {
-        // Ensure the menu is hidden initially
+        // Ensure the menus are hidden initially
         deviceSettingsPanel.SetActive(false);
         controllerMenuPanel.SetActive(false);
+        _isDeviceVisible = false;
+        _isControllerVisible = false;
+
+    }
+
+    public void ToggleDevices()
+    {
+        if (!_isDeviceVisible)
+        {
+            deviceSettingsPanel.SetActive(true);
+            _isDeviceVisible = true;
+        }
+        else
+        {
+            deviceSettingsPanel.SetActive(false);
+            _isDeviceVisible = false;
+        }
+    }
+    
+    public void ToggleController()
+    {
+        if (!_isControllerVisible)
+        {
+            controllerMenuPanel.SetActive(true);
+            _isControllerVisible = true;
+        }
+        else
+        {
+            controllerMenuPanel.SetActive(false);
+            _isControllerVisible = false;
+        }
+    }
+
+    public void CloseAll()
+    {
+        deviceSettingsPanel.SetActive(false);
+        controllerMenuPanel.SetActive(false);
+        _isDeviceVisible = false;
+        _isControllerVisible = false;
     }
 }

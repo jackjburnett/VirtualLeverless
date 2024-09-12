@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public GameObject optionsPanel; // Assign the panel to open here
     public bool isLocked; // Lock state for button behavior
-    public Text buttonText;
-    public string buttonFunction;
+    public TMP_Text buttonText;
+    public string buttonFunction= "A";
     public SendViaUDP udpSender;
 
     private RectTransform _rectTransform;

@@ -864,7 +864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc3c2355124552746baf3a9f0b0dc17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sendButton: {fileID: 1977176867}
+  sendButton: {fileID: 743901072}
+  sendButton2: {fileID: 1505330529}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,8 +2393,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -16,6 +16,12 @@ public class ButtonSpawner : MonoBehaviour
 
     private void Start()
     {
+        if (canvas == null)
+        {
+            Debug.LogError("Canvas is not assigned.");
+            return;
+        }
+
         // Ensure the canvas has a GraphicRaycaster component
         _raycaster = canvas.GetComponent<GraphicRaycaster>();
         if (_raycaster == null) Debug.LogError("The canvas does not have a GraphicRaycaster component.");
@@ -98,8 +104,8 @@ public class ButtonSpawner : MonoBehaviour
             return;
         }
 
-        // Set the button's position in the world space, then adjust its anchoredPosition within ButtonManager
-        buttonRectTransform.position = canvas.transform.TransformPoint(localPoint);
+        // Set the button's position in the local space of the button manager
+        buttonRectTransform.anchoredPosition = localPoint;
         Debug.Log($"Button spawned at: {localPoint}");
     }
 

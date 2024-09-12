@@ -9,8 +9,22 @@ public class IPInputValidator : TMP_InputValidator
     private readonly string _ipPattern =
         @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){0,3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)?$";
 
+    private float _lastInputTime = 0f; // Debouncing time
+    private float _inputDelay = 0.1f; // Minimum delay between inputs
+    
     public override char Validate(ref string text, ref int pos, char ch)
     {
+        // Debounce input on mobile platforms to prevent double-entry issue
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            if (Time.time - _lastInputTime < _inputDelay)
+            {
+                // Ignore input if too soon after the last one
+                return '\0';
+            }
+            _lastInputTime = Time.time; // Update last input time
+        }
+        
         // Concatenate the current text with the new character
         string newText = text.Insert(pos, ch.ToString());
 

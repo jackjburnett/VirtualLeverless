@@ -1774,7 +1774,6 @@ MonoBehaviour:
   buttons:
   - {fileID: 1348840268}
   - {fileID: 761370983}
-  - {fileID: 0}
   - {fileID: 743901072}
   - {fileID: 1505330529}
   - {fileID: 1376753370}
@@ -1785,7 +1784,6 @@ MonoBehaviour:
   - {fileID: 157209853}
   - {fileID: 1385940663}
   - {fileID: 1776008757}
-  - {fileID: 0}
   - {fileID: 1406195873}
   - {fileID: 131786831}
 --- !u!4 &790973247
@@ -1893,11 +1891,11 @@ MonoBehaviour:
   m_ContentType: 9
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 2
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 8
+  m_CharacterValidation: 0
   m_RegexValue: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$ '
   m_GlobalPointSize: 14
   m_CharacterLimit: 0

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,22 +6,19 @@ using UnityEngine.UI;
 public class ButtonSpawner : MonoBehaviour
 {
     public GameObject buttonPrefab; // Assign your button prefab here
-    public Canvas[] canvases; // Array of canvases to check
+    public Canvas canvas; // Single canvas to check
+    public Transform buttonManager; // The parent object where buttons should be instantiated
     public bool isLocked; // Lock state for button spawning
+    private readonly List<RaycastResult> _raycastResults = new();
     private PointerEventData _pointerEventData;
 
-    private GraphicRaycaster[] _raycasters;
-    private readonly List<RaycastResult> _raycastResults = new();
+    private GraphicRaycaster _raycaster;
 
     private void Start()
     {
-        // Ensure each canvas has a GraphicRaycaster component
-        _raycasters = new GraphicRaycaster[canvases.Length];
-        for (var i = 0; i < canvases.Length; i++)
-        {
-            _raycasters[i] = canvases[i].GetComponent<GraphicRaycaster>();
-            if (_raycasters[i] == null) Debug.LogError($"Canvas {i} does not have a GraphicRaycaster component.");
-        }
+        // Ensure the canvas has a GraphicRaycaster component
+        _raycaster = canvas.GetComponent<GraphicRaycaster>();
+        if (_raycaster == null) Debug.LogError("The canvas does not have a GraphicRaycaster component.");
 
         _pointerEventData = new PointerEventData(EventSystem.current);
     }
@@ -55,69 +51,56 @@ public class ButtonSpawner : MonoBehaviour
     {
         var isUIElementUnderneath = false;
 
-        // Check each canvas
-        foreach (var canvas in canvases)
+        // Convert touch position to the canvas's local space
+        var canvasRect = canvas.GetComponent<RectTransform>();
+        if (canvasRect == null)
         {
-            var canvasRect = canvas.GetComponent<RectTransform>();
-            if (canvasRect == null)
+            Debug.LogWarning("Canvas does not have a RectTransform component.");
+            return;
+        }
+
+        // Convert touch position to the canvas's local space
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            position,
+            canvas.worldCamera,
+            out var localPoint
+        );
+
+        // Set up pointer event data
+        _pointerEventData.position = position;
+        _raycastResults.Clear();
+        _raycaster.Raycast(_pointerEventData, _raycastResults);
+
+        foreach (var result in _raycastResults)
+        {
+            Debug.Log($"Raycast hit: {result.gameObject.name}");
+            // Check for any UI element, including Buttons and Panels
+            if (result.gameObject.GetComponent<Graphic>() != null)
             {
-                Debug.LogWarning("Canvas does not have a RectTransform component.");
-                continue;
-            }
-
-            // Convert touch position to the canvas's local space
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                position,
-                canvas.worldCamera,
-                out var localPoint
-            );
-
-            // Set up pointer event data
-            _pointerEventData.position = position;
-            _raycastResults.Clear();
-            _raycasters[Array.IndexOf(canvases, canvas)].Raycast(_pointerEventData, _raycastResults);
-
-            foreach (var result in _raycastResults)
-            {
-                Debug.Log($"Raycast hit: {result.gameObject.name}");
-                // Check for any UI element, including Buttons and Panels
-                if (result.gameObject.GetComponent<Graphic>() != null)
-                {
-                    isUIElementUnderneath = true;
-                    break;
-                }
-            }
-
-            if (isUIElementUnderneath)
-            {
-                Debug.Log("UI element found under the cursor.");
+                isUIElementUnderneath = true;
                 break;
             }
-
-            // Spawn button only if there's no UI element underneath
-            // Assuming you want to spawn on the first canvas
-            var targetCanvas = canvases[0];
-            if (targetCanvas == null)
-            {
-                Debug.LogWarning("The target canvas is null.");
-                return;
-            }
-
-            var newButton = Instantiate(buttonPrefab, targetCanvas.transform);
-            var buttonRectTransform = newButton.GetComponent<RectTransform>();
-            if (buttonRectTransform == null)
-            {
-                Debug.LogError("The button prefab does not have a RectTransform component.");
-                return;
-            }
-
-            // Directly use the localPoint as the button position
-            buttonRectTransform.anchoredPosition = localPoint;
-
-            Debug.Log($"Button spawned at: {localPoint}");
-            break; // Exit after spawning the button
         }
+
+        if (isUIElementUnderneath)
+        {
+            Debug.Log("UI element found under the cursor.");
+            return; // Stop if there's a UI element underneath
+        }
+
+        // Spawn button only if there's no UI element underneath
+        var newButton = Instantiate(buttonPrefab, buttonManager); // Instantiate button as a child of ButtonManager
+        var buttonRectTransform = newButton.GetComponent<RectTransform>();
+        if (buttonRectTransform == null)
+        {
+            Debug.LogError("The button prefab does not have a RectTransform component.");
+            return;
+        }
+
+        // Set the button's position in the world space, then adjust its anchoredPosition within ButtonManager
+        buttonRectTransform.position = canvas.transform.TransformPoint(localPoint);
+        Debug.Log($"Button spawned at: {localPoint}");
     }
 
     // Method to set the lock state

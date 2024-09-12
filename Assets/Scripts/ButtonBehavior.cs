@@ -82,4 +82,12 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         // Optional: Snap back to start position or handle release logic
         // _rectTransform.anchoredPosition = _startPosition;
     }
+     
+     // Method to lock or unlock the button 
+        public void Lock(bool lockState)
+        {
+            isLocked = lockState;
+            // Optionally, you could also visually indicate the lock state here
+            // For example, you might change the button color or disable its interactions
+        }
 }

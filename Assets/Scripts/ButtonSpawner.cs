@@ -96,7 +96,7 @@ public class ButtonSpawner : MonoBehaviour
         }
 
         // Spawn button only if there's no UI element underneath
-        var newButton = Instantiate(buttonPrefab); // Instantiate button
+        var newButton = Instantiate(buttonPrefab, buttonManager, false); // Instantiate button
         if (newButton == null)
         {
             Debug.LogError("Failed to instantiate button prefab.");
@@ -104,7 +104,6 @@ public class ButtonSpawner : MonoBehaviour
         }
 
         // Set the button's parent to the buttonManager
-        newButton.transform.SetParent(buttonManager, false);
 
         var buttonRectTransform = newButton.GetComponent<RectTransform>();
         if (buttonRectTransform == null)

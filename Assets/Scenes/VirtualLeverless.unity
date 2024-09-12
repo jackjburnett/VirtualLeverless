@@ -4472,6 +4472,7 @@ GameObject:
   - component: {fileID: 2042341434}
   - component: {fileID: 2042341436}
   - component: {fileID: 2042341437}
+  - component: {fileID: 2042341438}
   m_Layer: 0
   m_Name: ButtonManager
   m_TagString: Untagged
@@ -4538,7 +4539,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549b0fdecdd1a1044b16ccda54e3eeec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons: []
+  buttonGameObjects: []
+--- !u!114 &2042341438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042341433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247616aab5e9f9b4f8aaaad66c70f578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optionsPanel: {fileID: 0}
+  isLocked: 0
 --- !u!1 &2042905124
 GameObject:
   m_ObjectHideFlags: 0

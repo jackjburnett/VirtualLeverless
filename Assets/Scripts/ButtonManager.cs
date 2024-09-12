@@ -3,25 +3,38 @@ using UnityEngine;
 
 public class ButtonManager : MonoBehaviour
 {
-    public List<GameObject> buttons = new(); // List to store buttons
+    public List<GameObject> buttonGameObjects = new(); // List to store GameObjects
 
-    // Method to add a button to the list
-    public void AddButton(GameObject button)
+    // Method to add a button GameObject to the list
+    public void AddButton(GameObject buttonGameObject)
     {
-        if (button != null)
+        if (buttonGameObject != null && !buttonGameObjects.Contains(buttonGameObject))
         {
-            buttons.Add(button);
-            Debug.Log("Button added to ButtonManager list.");
+            buttonGameObjects.Add(buttonGameObject);
+            Debug.Log("Button GameObject added to ButtonManager list.");
         }
     }
 
     // Method to delete all buttons
     public void DeleteAllButtons()
     {
-        foreach (var button in buttons)
-            if (button != null)
-                Destroy(button); // Destroy the button game object
-        buttons.Clear(); // Clear the list
+        foreach (var buttonGameObject in buttonGameObjects)
+            if (buttonGameObject != null)
+                Destroy(buttonGameObject); // Destroy the button GameObject
+        buttonGameObjects.Clear(); // Clear the list
         Debug.Log("All buttons have been deleted.");
+    }
+
+    // Method to lock or unlock all buttons
+    public void LockAllButtons(bool lockState)
+    {
+        foreach (var buttonGameObject in buttonGameObjects)
+            if (buttonGameObject != null)
+            {
+                var buttonBehavior = buttonGameObject.GetComponent<ButtonBehavior>();
+                if (buttonBehavior != null) buttonBehavior.Lock(lockState); // Call the Lock method on each button
+            }
+
+        Debug.Log($"All buttons have been {(lockState ? "locked" : "unlocked")}.");
     }
 }

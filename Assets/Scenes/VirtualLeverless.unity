@@ -1395,7 +1395,7 @@ GameObject:
   - component: {fileID: 743901073}
   - component: {fileID: 743901072}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Save Layout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2033,10 +2033,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Load Layout
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
+  m_sharedMaterial: {fileID: -4340434349104086167, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2167,10 +2167,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Lock All Buttons
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
+  m_sharedMaterial: {fileID: -4340434349104086167, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2341,7 +2341,7 @@ GameObject:
   - component: {fileID: 1047225474}
   - component: {fileID: 1047225473}
   m_Layer: 5
-  m_Name: rename test
+  m_Name: Toggle Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2774,10 +2774,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Clear Layout
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
+  m_sharedMaterial: {fileID: -4340434349104086167, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2998,7 +2998,7 @@ GameObject:
   - component: {fileID: 1376753371}
   - component: {fileID: 1376753370}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Clear Layout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3119,7 +3119,7 @@ GameObject:
   - component: {fileID: 1380423695}
   - component: {fileID: 1380423694}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Lock All Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3632,7 +3632,7 @@ GameObject:
   - component: {fileID: 1476973995}
   - component: {fileID: 1476973994}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: Unlock All Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3753,7 +3753,7 @@ GameObject:
   - component: {fileID: 1505330530}
   - component: {fileID: 1505330529}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Load Layout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3918,10 +3918,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 'Save Layout
+
+'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
+  m_sharedMaterial: {fileID: -4340434349104086167, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4227,10 +4229,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Unlock All Buttons
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
+  m_sharedMaterial: {fileID: -4340434349104086167, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4495,10 +4497,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Toggle Grid
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
+  m_sharedMaterial: {fileID: -4340434349104086167, guid: ae7143f9ae5ebfd41b62110e6fd4ff3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

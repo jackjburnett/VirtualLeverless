@@ -5,7 +5,7 @@ using TMPro;
 public class ThemeManager : MonoBehaviour
 {
     public ThemeColours themeColours;
-    public Image background;
+    public SpriteRenderer background;
     public TextMeshProUGUI[] texts;
     public Button[] buttons;
     public TextMeshProUGUI[] buttonTexts;

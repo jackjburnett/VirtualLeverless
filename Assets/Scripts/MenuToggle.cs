@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class MenuToggle : MonoBehaviour
 {
-    public GameObject deviceSettingsPanel;  // Assign the panel containing menu buttons in the Inspector
-    public GameObject controllerMenuPanel;  // Assign the panel containing menu buttons in the Inspector
+    public GameObject deviceSettingsPanel; // Assign the panel containing menu buttons in the Inspector
+    public GameObject controllerMenuPanel; // Assign the panel containing menu buttons in the Inspector
+    private bool _isControllerVisible;
 
     private bool _isDeviceVisible;
-    private bool _isControllerVisible;
 
     private void Start()
     {
@@ -15,7 +15,6 @@ public class MenuToggle : MonoBehaviour
         controllerMenuPanel.SetActive(false);
         _isDeviceVisible = false;
         _isControllerVisible = false;
-
     }
 
     public void ToggleDevices()
@@ -31,7 +30,7 @@ public class MenuToggle : MonoBehaviour
             _isDeviceVisible = false;
         }
     }
-    
+
     public void ToggleController()
     {
         if (!_isControllerVisible)

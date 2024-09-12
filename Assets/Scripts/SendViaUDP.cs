@@ -1,26 +1,37 @@
-using UnityEngine;
+using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class SendViaUDP : MonoBehaviour
 {
     public TMP_InputField serverIPInputField;
     public TMP_InputField portInputField;
-    
-    public UnityEvent<string> OnSendMessageRequested; // Event to trigger message sending
-    
-    private UdpClient _udpClient;
-    private string _serverIP = "192.168.0.17"; // Replace with your server IP address
-    private int _port = 8080; // UDP port number for communication
 
-    void Start()
+    [FormerlySerializedAs("OnSendMessageRequested")]
+    public UnityEvent<string> onSendMessageRequested; // Event to trigger message sending
+
+    private int _port = 8080; // UDP port number for communication
+    private string _serverIP = "192.168.0.17"; // Replace with your server IP address
+
+    private UdpClient _udpClient;
+
+    private void Start()
     {
         // Create UdpClient
         _udpClient = new UdpClient();
-        
-        OnSendMessageRequested.AddListener(SendMessage);
+
+        onSendMessageRequested.AddListener(SendMessage);
+    }
+
+    private void OnApplicationQuit()
+    {
+        // Close the UDP client when the application quits
+        if (_udpClient != null) _udpClient.Close();
     }
 
     public new void SendMessage(string message)
@@ -36,7 +47,7 @@ public class SendViaUDP : MonoBehaviour
         try
         {
             // Create message
-            byte[] data = Encoding.ASCII.GetBytes(message);
+            var data = Encoding.ASCII.GetBytes(message);
 
             // Send message to the server
             _udpClient.Send(data, data.Length, _serverIP, _port);
@@ -46,24 +57,15 @@ public class SendViaUDP : MonoBehaviour
         {
             Debug.LogError("SocketException: " + e.Message);
         }
-        catch (System.Exception e) // Ensure to use System.Exception
+        catch (Exception e) // Ensure to use System.Exception
         {
             Debug.LogError("Exception: " + e.Message);
         }
     }
-    
+
     private bool IsValidIP(string ip)
     {
         // Basic IP address validation
-        return System.Net.IPAddress.TryParse(ip, out _);
-    }
-
-    private void OnApplicationQuit()
-    {
-        // Close the UDP client when the application quits
-        if (_udpClient != null)
-        {
-            _udpClient.Close();
-        }
+        return IPAddress.TryParse(ip, out _);
     }
 }

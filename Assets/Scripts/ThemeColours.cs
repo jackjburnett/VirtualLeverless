@@ -1,11 +1,12 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class ThemeColours
 {
-    public Dictionary<string, Color> LightThemeColours = new Dictionary<string, Color>();
-    public Dictionary<string, Color> DarkThemeColours = new Dictionary<string, Color>();
+    public Dictionary<string, Color> DarkThemeColours = new();
+    public Dictionary<string, Color> LightThemeColours = new();
 
     public ThemeColours()
     {
@@ -21,7 +22,7 @@ public class ThemeColours
         DarkThemeColours.Add("button", HexToColor("#D63230"));
         DarkThemeColours.Add("border", HexToColor("#000000"));
     }
-    
+
     private Color HexToColor(string hex)
     {
         ColorUtility.TryParseHtmlString(hex, out var color);

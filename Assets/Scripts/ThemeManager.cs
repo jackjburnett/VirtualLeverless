@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ThemeManager : MonoBehaviour
 {
@@ -33,42 +33,28 @@ public class ThemeManager : MonoBehaviour
 
         // Update background colour
         if (currentThemeColours.TryGetValue("background", out var backgroundColour))
-        {
             background.color = backgroundColour;
-        }
 
         // Update text colours
         if (currentThemeColours.TryGetValue("text", out var textColour))
-        {
             foreach (var text in texts)
-            {
-            
                 text.color = textColour;
-            }
-        }
 
         // Update button colors (example: changing only the normal color)
         if (currentThemeColours.TryGetValue("button", out var buttonColour))
-        {
             foreach (var button in buttons)
             {
-            
                 var colors = button.colors;
                 colors.normalColor = buttonColour;
                 colors.pressedColor = textColour;
                 colors.selectedColor = textColour;
                 // colors.disabledColor = disabledColor;
-                colors.highlightedColor =  buttonColour;
+                colors.highlightedColor = buttonColour;
                 button.colors = colors;
             }
-        }
 
         // Update button text colours
         if (!currentThemeColours.TryGetValue("border", out var borderColour)) return;
-        foreach (var buttonText in buttonTexts)
-        {
-            
-            buttonText.color = borderColour;
-        }
+        foreach (var buttonText in buttonTexts) buttonText.color = borderColour;
     }
 }

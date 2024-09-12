@@ -1,65 +1,69 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Net.Sockets;
 using System.Text;
+using TMPro;
+using UnityEngine.Events;
 
 public class SendViaUDP : MonoBehaviour
 {
-    public Button sendButton;
-    public Button sendButton2;
+    public TMP_InputField serverIPInputField;
+    public TMP_InputField portInputField;
+    
+    public UnityEvent<string> OnSendMessageRequested; // Event to trigger message sending
+    
     private UdpClient _udpClient;
-    private string _serverIP = "192.168.0.17"; // Replace with your PC's IP address
-    private int _port = 8080; // _port number for UDP communication
+    private string _serverIP = "192.168.0.17"; // Replace with your server IP address
+    private int _port = 8080; // UDP port number for communication
 
     void Start()
     {
         // Create UdpClient
         _udpClient = new UdpClient();
         
-        // Add listener to the button
-        sendButton.onClick.AddListener(SendMessageToPC_A);
-        sendButton2.onClick.AddListener(SendMessageToPC_A2);
+        OnSendMessageRequested.AddListener(SendMessage);
     }
 
-    void SendMessageToPC_A()
+    public new void SendMessage(string message)
     {
+        // Update serverIP and port from the input fields
+        _serverIP = serverIPInputField.text;
+        if (!int.TryParse(portInputField.text, out _port) || !IsValidIP(_serverIP))
+        {
+            Debug.LogError("Invalid IP address or port number");
+            return;
+        }
+
         try
         {
             // Create message
-            string message = "A_PRESS";
             byte[] data = Encoding.ASCII.GetBytes(message);
 
             // Send message to the server
             _udpClient.Send(data, data.Length, _serverIP, _port);
-            Debug.Log("Sent message to PC: " + message);
+            Debug.Log($"Sent {message} to {_serverIP}:{_port}");
         }
         catch (SocketException e)
         {
-            Debug.Log("SocketException: " + e);
+            Debug.LogError("SocketException: " + e.Message);
+        }
+        catch (System.Exception e) // Ensure to use System.Exception
+        {
+            Debug.LogError("Exception: " + e.Message);
         }
     }
     
-    void SendMessageToPC_A2()
+    private bool IsValidIP(string ip)
     {
-        try
-        {
-            // Create message
-            string message = "A_RELEASE";
-            byte[] data = Encoding.ASCII.GetBytes(message);
-
-            // Send message to the server
-            _udpClient.Send(data, data.Length, _serverIP, _port);
-            Debug.Log("Sent message to PC: " + message);
-        }
-        catch (SocketException e)
-        {
-            Debug.Log("SocketException: " + e);
-        }
+        // Basic IP address validation
+        return System.Net.IPAddress.TryParse(ip, out _);
     }
 
     private void OnApplicationQuit()
     {
         // Close the UDP client when the application quits
-        _udpClient.Close();
+        if (_udpClient != null)
+        {
+            _udpClient.Close();
+        }
     }
 }

@@ -8,7 +8,7 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     public GameObject optionsPanel; // Assign the panel to open here
     public bool isLocked; // Lock state for button behavior
     public TMP_Text buttonText;
-    public string buttonFunction= "A";
+    public string buttonFunction = "?";
     public SendViaUDP udpSender;
 
     private RectTransform _rectTransform;
@@ -44,9 +44,9 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         if (isLocked) {
             udpSender.SendMessage(buttonFunction+"_PRESS"); 
         }else{
-        _pointerDownTime = Time.time;
-        _isDragging = false; // Reset dragging flag
-    }
+            _pointerDownTime = Time.time;
+            _isDragging = false; // Reset dragging flag
+        }
 }
     public void OnDrag(PointerEventData eventData)
     {
@@ -73,42 +73,27 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     {
         if (isLocked){
             udpSender.SendMessage(buttonFunction+"_RELEASE");
-            }else{
-
-        float timeHeld = Time.time - _pointerDownTime;
-
-        if (!_isDragging && timeHeld < HoldThreshold)
-        {
-            // Toggle options panel only if it is a tap
-            if (optionsPanel != null)
+        }
+        else{
+            float timeHeld = Time.time - _pointerDownTime;
+            if (!_isDragging && timeHeld < HoldThreshold)
             {
-                optionsPanel.SetActive(!optionsPanel.activeSelf);
+                // Toggle options panel only if it is a tap
+                if (optionsPanel != null){
+                    optionsPanel.SetActive(!optionsPanel.activeSelf);
+                }
             }
-            }
-            }
+        }
             
         // Optional: Snap back to start position or handle release logic
         // _rectTransform.anchoredPosition = _startPosition;
     }
      
      // Method to lock or unlock the button 
-        public void Lock(bool lockState)
-        {
-            isLocked = lockState;
-            // Optionally, you could also visually indicate the lock state here
-            // For example, you might change the button color or disable its interactions
-        }
-    
-     // Method to change button text
-        public void SetButtonText(string newText)
-        {
-            if (buttonText != null)
-            {
-                buttonText.text = newText;
-            }
-            else
-            {
-                Debug.LogWarning("ButtonText component is not assigned.");
-            }
-        }
+    public void Lock(bool lockState)
+    {
+        isLocked = lockState;
+        // Optionally, you could also visually indicate the lock state here
+        // For example, you might change the button color or disable its interactions
+    }
 }

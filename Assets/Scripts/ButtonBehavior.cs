@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public GameObject optionsPanel; // Assign the panel to open here
+    public bool isLocked; // Lock state for button behavior
 
     private RectTransform _rectTransform;
     private Canvas _canvas;
@@ -28,12 +29,16 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (isLocked) return; // Exit early if the button is locked
+
         _pointerDownTime = Time.time;
         _isDragging = false; // Reset dragging flag
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isLocked) return; // Exit early if the button is locked
+
         _isDragging = true; // Set dragging flag when drag starts
 
         // Move the button
@@ -53,6 +58,8 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (isLocked) return; // Exit early if the button is locked
+
         float timeHeld = Time.time - _pointerDownTime;
 
         if (!_isDragging && timeHeld < HoldThreshold)

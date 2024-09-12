@@ -96,7 +96,16 @@ public class ButtonSpawner : MonoBehaviour
         }
 
         // Spawn button only if there's no UI element underneath
-        var newButton = Instantiate(buttonPrefab, buttonManager); // Instantiate button as a child of ButtonManager
+        var newButton = Instantiate(buttonPrefab); // Instantiate button
+        if (newButton == null)
+        {
+            Debug.LogError("Failed to instantiate button prefab.");
+            return;
+        }
+
+        // Set the button's parent to the buttonManager
+        newButton.transform.SetParent(buttonManager, false);
+
         var buttonRectTransform = newButton.GetComponent<RectTransform>();
         if (buttonRectTransform == null)
         {
@@ -104,9 +113,16 @@ public class ButtonSpawner : MonoBehaviour
             return;
         }
 
-        // Set the button's position in the local space of the button manager
+        // Set the button's anchoredPosition in the local space of the buttonManager
         buttonRectTransform.anchoredPosition = localPoint;
         Debug.Log($"Button spawned at: {localPoint}");
+
+        // Add the button to the buttonManager's list
+        var buttonManagerScript = buttonManager.GetComponent<ButtonManager>();
+        if (buttonManagerScript != null)
+            buttonManagerScript.AddButton(newButton);
+        else
+            Debug.LogError("ButtonManager script is not attached to the buttonManager object.");
     }
 
     // Method to set the lock state

@@ -17,8 +17,16 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
-        _canvas = GetComponentInParent<Canvas>();
-        _startPosition = _rectTransform.anchoredPosition;
+        _canvas = FindObjectOfType<Canvas>(); // Find the Canvas in the scene
+
+        if (_canvas == null)
+        {
+            Debug.LogError("No Canvas found in the scene.");
+        }
+        else
+        {
+            _startPosition = _rectTransform.anchoredPosition;
+        }
 
         // Ensure the panel starts hidden
         if (optionsPanel != null)
@@ -46,7 +54,7 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         {
             Vector2 localPoint;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _canvas.transform as RectTransform,
+                _canvas.GetComponent<RectTransform>(), // Use Canvas RectTransform
                 eventData.position,
                 _canvas.worldCamera,
                 out localPoint

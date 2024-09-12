@@ -7,7 +7,8 @@ public class ButtonSpawner : MonoBehaviour
 {
     public GameObject buttonPrefab; // Assign your button prefab here
     public Canvas[] canvases;        // Array of canvases to check
-
+    public bool isLocked = false;   // Lock state for button spawning
+    
     private GraphicRaycaster[] raycasters;
     private PointerEventData pointerEventData;
     private List<RaycastResult> raycastResults = new List<RaycastResult>();
@@ -31,6 +32,13 @@ public class ButtonSpawner : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) // Detect left mouse click or single touch on mobile
         {
+            // Check the lock before proceeding
+            if (isLocked)
+            {
+                Debug.Log("Button spawning is currently locked.");
+                return;
+            }
+            
             Vector2 clickPosition = Input.mousePosition;
             Vector2 adjustedPosition = Vector2.zero;
             bool isUIElementUnderneath = false;
@@ -95,5 +103,17 @@ public class ButtonSpawner : MonoBehaviour
                 buttonRectTransform.anchoredPosition = adjustedPosition;
             }
         }
+    }
+    
+    // Method to set the lock state
+    public void SetLock(bool lockState)
+    {
+        isLocked = lockState;
+    }
+
+    // Optionally, you might want to toggle the lock state
+    public void ToggleLock()
+    {
+        isLocked = !isLocked;
     }
 }

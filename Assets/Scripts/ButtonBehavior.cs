@@ -6,6 +6,9 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 {
     public GameObject optionsPanel; // Assign the panel to open here
     public bool isLocked; // Lock state for button behavior
+    public Text buttonText;
+    public string buttonFunction;
+    public SendViaUDP udpSender;
 
     private RectTransform _rectTransform;
     private Canvas _canvas;
@@ -37,12 +40,13 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (isLocked) return; // Exit early if the button is locked
-
+        if (isLocked) {
+            udpSender.SendMessage(buttonFunction+"_PRESS"); 
+        }else{
         _pointerDownTime = Time.time;
         _isDragging = false; // Reset dragging flag
     }
-
+}
     public void OnDrag(PointerEventData eventData)
     {
         if (isLocked) return; // Exit early if the button is locked
@@ -66,7 +70,9 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (isLocked) return; // Exit early if the button is locked
+        if (isLocked){
+            udpSender.SendMessage(buttonFunction+"_RELEASE");
+            }else{
 
         float timeHeld = Time.time - _pointerDownTime;
 
@@ -77,8 +83,9 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
             {
                 optionsPanel.SetActive(!optionsPanel.activeSelf);
             }
-        }
-
+            }
+            }
+            
         // Optional: Snap back to start position or handle release logic
         // _rectTransform.anchoredPosition = _startPosition;
     }
@@ -89,5 +96,18 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
             isLocked = lockState;
             // Optionally, you could also visually indicate the lock state here
             // For example, you might change the button color or disable its interactions
+        }
+    
+     // Method to change button text
+        public void SetButtonText(string newText)
+        {
+            if (buttonText != null)
+            {
+                buttonText.text = newText;
+            }
+            else
+            {
+                Debug.LogWarning("ButtonText component is not assigned.");
+            }
         }
 }

@@ -32,11 +32,7 @@ public class ButtonSpawner : MonoBehaviour
     private void Update()
     {
         // Check the lock before proceeding
-        if (isLocked)
-        {
-            Debug.Log("Button spawning is currently locked.");
-            return;
-        }
+        if (isLocked) return;
 
         // Handle multiple touches
         if (Input.touchCount > 0)

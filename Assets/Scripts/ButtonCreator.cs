@@ -28,82 +28,91 @@ public class ButtonSpawner : MonoBehaviour
         pointerEventData = new PointerEventData(EventSystem.current);
     }
 
-    void Update()
+   void Update()
+{
+    if (Input.GetMouseButtonDown(0)) // Detect left mouse click or single touch on mobile
     {
-        if (Input.GetMouseButtonDown(0)) // Detect left mouse click or single touch on mobile
+        // Check the lock before proceeding
+        if (isLocked)
         {
-            // Check the lock before proceeding
-            if (isLocked)
+            Debug.Log("Button spawning is currently locked.");
+            return;
+        }
+        
+        Vector2 clickPosition = Input.mousePosition;
+        Vector2 localPoint = Vector2.zero;
+        bool isUIElementUnderneath = false;
+
+        // Check each canvas
+        foreach (var canvas in canvases)
+        {
+            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+            if (canvasRect == null)
             {
-                Debug.Log("Button spawning is currently locked.");
-                return;
+                Debug.LogWarning("Canvas does not have a RectTransform component.");
+                continue;
             }
-            
-            Vector2 clickPosition = Input.mousePosition;
-            Vector2 adjustedPosition = Vector2.zero;
-            bool isUIElementUnderneath = false;
 
-            // Check each canvas
-            foreach (var canvas in canvases)
+            // Convert click position to the canvas's local space
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRect,
+                clickPosition,
+                canvas.worldCamera,
+                out localPoint
+            );
+
+            // Set up pointer event data
+            pointerEventData.position = clickPosition;
+            raycastResults.Clear();
+            raycasters[System.Array.IndexOf(canvases, canvas)].Raycast(pointerEventData, raycastResults);
+
+            Debug.Log($"Checking canvas: {canvas.name}");
+            foreach (var result in raycastResults)
             {
-                RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-                Vector2 canvasSize = canvasRect.sizeDelta; // Canvas size in pixels
-
-                // Convert click position to the canvas's local space
-                Vector2 localPoint;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    canvasRect,
-                    clickPosition,
-                    canvas.worldCamera,
-                    out localPoint
-                );
-
-                // Calculate the offset based on the canvas size
-                Vector2 offset = new Vector2(canvasSize.x / 2, -canvasSize.y / 2);
-
-                // Apply the offset to the localPoint
-                adjustedPosition = localPoint + offset;
-
-                // Debugging
-                Debug.Log($"Click Position: {clickPosition}");
-                Debug.Log($"Local Point: {localPoint}");
-                Debug.Log($"Canvas Size: {canvasSize}");
-                Debug.Log($"Offset: {offset}");
-                Debug.Log($"Adjusted Position: {adjustedPosition}");
-
-                // Set up pointer event data
-                pointerEventData.position = clickPosition;
-                raycastResults.Clear();
-                raycasters[System.Array.IndexOf(canvases, canvas)].Raycast(pointerEventData, raycastResults);
-
-                foreach (var result in raycastResults)
+                Debug.Log($"Raycast hit: {result.gameObject.name}");
+                // Check for any UI element, including Buttons and Panels
+                if (result.gameObject.GetComponent<Graphic>() != null)
                 {
-                    // Check for any UI element, including Buttons and Panels
-                    if (result.gameObject.GetComponent<Graphic>() != null)
-                    {
-                        isUIElementUnderneath = true;
-                        break;
-                    }
-                }
-
-                if (isUIElementUnderneath)
-                {
+                    isUIElementUnderneath = true;
                     break;
                 }
             }
 
-            // Spawn button only if there's no UI element underneath
-            if (!isUIElementUnderneath)
+            if (isUIElementUnderneath)
             {
-                // Assuming you want to spawn on the first canvas
-                Canvas targetCanvas = canvases[0];
-                GameObject newButton = Instantiate(buttonPrefab, targetCanvas.transform);
-                RectTransform buttonRectTransform = newButton.GetComponent<RectTransform>();
-                // Apply the adjusted position to the button
-                buttonRectTransform.anchoredPosition = adjustedPosition;
+                Debug.Log("UI element found under the cursor.");
+                break;
             }
         }
+
+        // Spawn button only if there's no UI element underneath
+        if (!isUIElementUnderneath)
+        {
+            // Assuming you want to spawn on the first canvas
+            Canvas targetCanvas = canvases[0];
+            if (targetCanvas == null)
+            {
+                Debug.LogWarning("The target canvas is null.");
+                return;
+            }
+
+            GameObject newButton = Instantiate(buttonPrefab, targetCanvas.transform);
+            RectTransform buttonRectTransform = newButton.GetComponent<RectTransform>();
+            if (buttonRectTransform == null)
+            {
+                Debug.LogError("The button prefab does not have a RectTransform component.");
+                return;
+            }
+
+            // Directly use the localPoint as the button position
+            buttonRectTransform.anchoredPosition = localPoint;
+
+            Debug.Log($"Button spawned at: {localPoint}");
+        }
     }
+}
+
+
     
     // Method to set the lock state
     public void SetLock(bool lockState)

@@ -20,6 +20,16 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     private void Awake()
     {
+        GameObject udpObject = GameObject.Find("EventSystem"); // Replace with your actual GameObject name
+        if (udpObject != null)
+        {
+            udpSender = udpObject.GetComponent<SendViaUDP>();
+        }
+        else
+        {
+            Debug.LogError("EventSystem not found in the scene.");
+        }
+        
         _rectTransform = GetComponent<RectTransform>();
         _canvas = FindObjectOfType<Canvas>(); // Find the Canvas in the scene
 

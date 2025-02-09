@@ -1,109 +1,80 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 
 public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public GameObject optionsPanel; // Assign the panel to open here
-    public bool isLocked; // Lock state for button behavior
     public TMP_Text buttonText;
-    public string buttonFunction = "?";
+    public string buttonFunction;
     public SendViaUDP udpSender;
 
-    private RectTransform _rectTransform;
-    private Canvas _canvas;
-    private Vector2 _startPosition;
-    private float _pointerDownTime;
-    private bool _isDragging;
-    private const float HoldThreshold = 0.5f; // Time in seconds to differentiate a hold from a tap
+    private RectTransform _buttonTransform;
+    private bool _isLocked;
 
     private void Awake()
     {
-        GameObject udpObject = GameObject.Find("EventSystem"); // Replace with your actual GameObject name
-        if (udpObject != null)
-        {
-            udpSender = udpObject.GetComponent<SendViaUDP>();
-        }
+        // Check if the EventSystem GameObject exists
+        var eventSystem = GameObject.Find("EventSystem");
+        if (eventSystem != null)
+            udpSender = eventSystem.GetComponent<SendViaUDP>();
         else
-        {
-            Debug.LogError("EventSystem not found in the scene.");
-        }
-        
-        _rectTransform = GetComponent<RectTransform>();
-        _canvas = FindObjectOfType<Canvas>(); // Find the Canvas in the scene
+            Debug.LogError("EventSystem GameObject not found.");
 
-        if (_canvas == null)
-        {
-            Debug.LogError("No Canvas found in the scene.");
-        }
-        else
-        {
-            _startPosition = _rectTransform.anchoredPosition;
-        }
+        // Get the RectTransform component
+        _buttonTransform = GetComponent<RectTransform>();
 
-        // Ensure the panel starts hidden
-        if (optionsPanel != null)
+        // Set the button text to the button function
+        buttonText.text = buttonFunction;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (!_isLocked)
         {
-            optionsPanel.SetActive(false);
+            // Move the button to the new position
+            var newPosition = eventData.position;
+
+            // Clamp the new position to the bounds of the canvas
+            var canvas = GetComponentInParent<Canvas>();
+            if (canvas != null)
+            {
+                var canvasRect = canvas.pixelRect;
+                newPosition.x = Mathf.Clamp(newPosition.x, canvasRect.xMin, canvasRect.xMax);
+                newPosition.y = Mathf.Clamp(newPosition.y, canvasRect.yMin, canvasRect.yMax);
+            }
+
+            _buttonTransform.anchoredPosition = newPosition;
         }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (isLocked) {
-            udpSender.SendMessage(buttonFunction+"_PRESS"); 
-        }else{
-            _pointerDownTime = Time.time;
-            _isDragging = false; // Reset dragging flag
-        }
-}
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (isLocked) return; // Exit early if the button is locked
-
-        _isDragging = true; // Set dragging flag when drag starts
-
-        // Move the button
-        if (_canvas != null)
+        if (_isLocked)
         {
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _canvas.GetComponent<RectTransform>(), // Use Canvas RectTransform
-                eventData.position,
-                _canvas.worldCamera,
-                out localPoint
-            );
-
-            _rectTransform.anchoredPosition = localPoint;
+            // Send a message over UDP with the button function name and "_PRESS" appended
+            if (udpSender != null)
+                udpSender.SendMessage(buttonFunction + "_PRESS");
+            else
+                Debug.LogError("udpSender is null.");
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (isLocked){
-            udpSender.SendMessage(buttonFunction+"_RELEASE");
-        }
-        else{
-            float timeHeld = Time.time - _pointerDownTime;
-            if (!_isDragging && timeHeld < HoldThreshold)
-            {
-                // Toggle options panel only if it is a tap
-                if (optionsPanel != null){
-                    optionsPanel.SetActive(!optionsPanel.activeSelf);
-                }
-            }
-        }
-            
-        // Optional: Snap back to start position or handle release logic
-        // _rectTransform.anchoredPosition = _startPosition;
     }
-     
-     // Method to lock or unlock the button 
+
     public void Lock(bool lockState)
     {
-        isLocked = lockState;
-        // Optionally, you could also visually indicate the lock state here
-        // For example, you might change the button color or disable its interactions
+        _isLocked = lockState;
+        GetComponent<Button>().interactable = !lockState;
+
+        // Update the button text to reflect the lock state
+        buttonText.text = lockState ? "Locked" : buttonFunction;
+    }
+
+    public void ToggleLock()
+    {
+        Lock(!_isLocked);
     }
 }

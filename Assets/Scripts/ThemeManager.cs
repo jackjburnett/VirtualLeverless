@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ThemeManager : MonoBehaviour
 {
     public ThemeColours themeColours;
-    public SpriteRenderer background;
+    public Image background;
     public TextMeshProUGUI[] texts;
     public Button[] buttons;
     public TextMeshProUGUI[] buttonTexts;

@@ -25,8 +25,25 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         // Get the RectTransform component
         _buttonTransform = GetComponent<RectTransform>();
 
-        // Set the button text to the button function
-        buttonText.text = buttonFunction;
+        // Set the button text to the button function, unless it's a special case
+        if (buttonFunction.ToUpper() == "LEFT")
+            buttonText.text = "←";
+        else if (buttonFunction.ToUpper() == "RIGHT")
+            buttonText.text = "→";
+        else if (buttonFunction.ToUpper() == "UP")
+            buttonText.text = "↑";
+        else if (buttonFunction.ToUpper() == "DOWN")
+            buttonText.text = "↓";
+        else if (buttonFunction.ToUpper() == "LEFT_SHOULDER")
+            buttonText.text = "LB";
+        else if (buttonFunction.ToUpper() == "RIGHT_SHOULDER")
+            buttonText.text = "RB";
+        else if (buttonFunction.ToUpper() == "LEFT_TRIGGER")
+            buttonText.text = "LT";
+        else if (buttonFunction.ToUpper() == "RIGHT_TRIGGER")
+            buttonText.text = "RT";
+        else
+            buttonText.text = buttonFunction;
 
         _canvas = GetComponentInParent<Canvas>();
         Lock(true);
@@ -58,7 +75,7 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (_isLocked) udpSender.SendMessage("A_RELEASE");
+        if (_isLocked) udpSender.SendMessage(buttonFunction + "_RELEASE");
     }
 
     public void Lock(bool lockState)

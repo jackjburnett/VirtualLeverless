@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using TMPro;
@@ -9,16 +8,17 @@ using UnityEngine.Serialization;
 
 public class SendViaUDP : MonoBehaviour
 {
-    public TMP_InputField serverIPInputField;
+    public TMP_InputField[] serverIPInputFields;
     public TMP_InputField portInputField;
 
     [FormerlySerializedAs("OnSendMessageRequested")]
     public UnityEvent<string> onSendMessageRequested; // Event to trigger message sending
 
     private int _port = 8080; // UDP port number for communication
-    private string _serverIP = "192.168.0.17"; // Replace with your server IP address
+    private string _serverIP; // Server IP address
 
     private UdpClient _udpClient;
+
 
     private void Start()
     {
@@ -36,9 +36,12 @@ public class SendViaUDP : MonoBehaviour
 
     public new void SendMessage(string message)
     {
-        // Update serverIP and port from the input fields
-        _serverIP = serverIPInputField.text;
-        if (!int.TryParse(portInputField.text, out _port) || !IsValidIP(_serverIP))
+        // Update serverIP from the input fields
+        var ipParts = new string[4];
+        for (var i = 0; i < 4; i++) ipParts[i] = serverIPInputFields[i].text;
+        _serverIP = string.Join(".", ipParts);
+
+        if (!IsValidIP(ipParts) || !int.TryParse(portInputField.text, out _port))
         {
             Debug.LogError("Invalid IP address or port number");
             return;
@@ -63,9 +66,13 @@ public class SendViaUDP : MonoBehaviour
         }
     }
 
-    private bool IsValidIP(string ip)
+
+    private bool IsValidIP(string[] ipParts)
     {
-        // Basic IP address validation
-        return IPAddress.TryParse(ip, out _);
+        foreach (var part in ipParts)
+            if (!int.TryParse(part, out var value) || value < 0 || value > 255)
+                return false;
+
+        return true;
     }
 }

@@ -11,7 +11,7 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     private RectTransform _buttonTransform;
     private Canvas _canvas;
-    private bool _isLocked;
+    private bool _isLocked = true;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         buttonText.text = buttonFunction;
 
         _canvas = GetComponentInParent<Canvas>();
-        Lock(false);
+        Lock(true);
     }
 
     public void OnDrag(PointerEventData eventData)

@@ -1695,6 +1695,8 @@ GameObject:
   - component: {fileID: 194934404}
   - component: {fileID: 194934407}
   - component: {fileID: 194934406}
+  - component: {fileID: 194934408}
+  - component: {fileID: 194934409}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1812,7 +1814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74386dd25395ec34ca88db612c2736cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 0}
 --- !u!114 &194934407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1825,7 +1827,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e0eedd4ed941f749bad516867f9bbe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 0}
+--- !u!114 &194934408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc437773d2f35fe42ac752769d32cfe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSpawner: {fileID: 0}
+  panel: {fileID: 1519666922}
+--- !u!114 &194934409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd73edded40f0d4aa532957b911bf30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPrefab: {fileID: 7998106957613890086, guid: 65991363fd4bf414a9e900f8f1786b34, type: 3}
+  panel: {fileID: 1519666922}
 --- !u!1 &247977168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3080,7 +3110,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 743901073}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 194934408}
+        m_TargetAssemblyTypeName: SaveButtonLayout, Assembly-CSharp
+        m_MethodName: SaveLayout
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &743901073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3387,7 +3429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: LEFT_SHOULDER
 --- !u!114 &848244565
@@ -5002,7 +5044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: LEFT_TRIGGER
 --- !u!114 &1161251808
@@ -5151,7 +5193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: RIGHT_TRIGGER
 --- !u!114 &1175072620
@@ -5300,7 +5342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: X
 --- !u!114 &1189891979
@@ -5717,7 +5759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: B
 --- !u!114 &1250497951
@@ -6134,7 +6176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: DPAD_LEFT
 --- !u!114 &1325838201
@@ -6623,9 +6665,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: DeleteAllButtons
+      - m_Target: {fileID: 194934409}
+        m_TargetAssemblyTypeName: ButtonSpawner, Assembly-CSharp
+        m_MethodName: ClearAllButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7351,7 +7393,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1505330530}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 194934408}
+        m_TargetAssemblyTypeName: SaveButtonLayout, Assembly-CSharp
+        m_MethodName: LoadLayout
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1505330530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7556,7 +7610,6 @@ GameObject:
   - component: {fileID: 1519666922}
   - component: {fileID: 1519666921}
   - component: {fileID: 1519666920}
-  - component: {fileID: 1519666923}
   m_Layer: 5
   m_Name: Button Panel
   m_TagString: Untagged
@@ -7621,20 +7674,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1519666923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519666919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afd73edded40f0d4aa532957b911bf30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 7998106957613890086, guid: 65991363fd4bf414a9e900f8f1786b34, type: 3}
-  panel: {fileID: 1519666922}
 --- !u!1 &1549115872
 GameObject:
   m_ObjectHideFlags: 0
@@ -7687,7 +7726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: DPAD_DOWN
 --- !u!114 &1549115875
@@ -7930,7 +7969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: A
 --- !u!1 &1641687409
@@ -8471,7 +8510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: Y
 --- !u!114 &1754126047
@@ -9518,7 +9557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: DPAD_UP
 --- !u!114 &1992364070
@@ -9874,7 +9913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: DPAD_RIGHT
 --- !u!114 &2063684935
@@ -10023,7 +10062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 1519666923}
+  buttonSpawner: {fileID: 194934409}
   sendViaUDP: {fileID: 194934403}
   buttonBehaviorValue: RIGHT_SHOULDER
 --- !u!114 &2098306917

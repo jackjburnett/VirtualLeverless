@@ -6,9 +6,9 @@ public class ButtonSpawner : MonoBehaviour
     public GameObject buttonPrefab; // Assign the prefab of your button in the Unity Editor
     public RectTransform panel; // Assign the panel where you want to spawn the buttons
 
-    private readonly List<ButtonBehavior> spawnedButtons = new();
+    private readonly List<ButtonBehavior> _spawnedButtons = new();
 
-    public void SpawnButton(string buttonFunction, GameObject udpServer)
+    public void SpawnButton(string buttonFunction, GameObject udpServer, float x = 0, float y = 0)
     {
         if (buttonPrefab == null || panel == null)
         {
@@ -33,13 +33,22 @@ public class ButtonSpawner : MonoBehaviour
         // Set the udp server game object
         buttonBehavior.udpSender = udpServer.GetComponent<SendViaUDP>();
 
-        spawnedButtons.Add(buttonBehavior); // Store button reference
+        var buttonTransform = button.GetComponent<RectTransform>();
+        buttonTransform.anchoredPosition = new Vector2(x, y); // ✅ Set position
+
+        _spawnedButtons.Add(buttonBehavior); // Store button reference
 
         Debug.Log($"Button spawned with function: {buttonFunction}");
     }
 
     public List<ButtonBehavior> GetSpawnedButtons()
     {
-        return spawnedButtons; // Return the list of buttons
+        return _spawnedButtons; // Return the list of buttons
+    }
+
+    public void ClearAllButtons()
+    {
+        foreach (var button in _spawnedButtons) Destroy(button.gameObject);
+        _spawnedButtons.Clear();
     }
 }

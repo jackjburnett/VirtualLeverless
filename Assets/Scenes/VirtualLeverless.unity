@@ -1814,7 +1814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74386dd25395ec34ca88db612c2736cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 0}
+  buttonSpawner: {fileID: 194934409}
 --- !u!114 &194934407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1827,7 +1827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e0eedd4ed941f749bad516867f9bbe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 0}
+  buttonSpawner: {fileID: 194934409}
 --- !u!114 &194934408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1840,7 +1840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc437773d2f35fe42ac752769d32cfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 0}
+  buttonSpawner: {fileID: 194934409}
   panel: {fileID: 1519666922}
 --- !u!114 &194934409
 MonoBehaviour:

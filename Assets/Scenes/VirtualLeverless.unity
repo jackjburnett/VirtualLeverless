@@ -1693,6 +1693,8 @@ GameObject:
   - component: {fileID: 194934403}
   - component: {fileID: 194934405}
   - component: {fileID: 194934404}
+  - component: {fileID: 194934407}
+  - component: {fileID: 194934406}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1798,6 +1800,32 @@ MonoBehaviour:
   deviceSettingsPanel: {fileID: 661937272}
   controllerMenuPanel: {fileID: 1009670217}
   buttonMenuPanel: {fileID: 1462856738}
+--- !u!114 &194934406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74386dd25395ec34ca88db612c2736cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSpawner: {fileID: 1519666923}
+--- !u!114 &194934407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e0eedd4ed941f749bad516867f9bbe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSpawner: {fileID: 1519666923}
 --- !u!1 &247977168
 GameObject:
   m_ObjectHideFlags: 0
@@ -6728,9 +6756,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonBehavior, Assembly-CSharp
-        m_MethodName: ToggleLock
+      - m_Target: {fileID: 194934407}
+        m_TargetAssemblyTypeName: LockAllButtons, Assembly-CSharp
+        m_MethodName: LockAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7191,10 +7219,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: LockAllButtons
-        m_Mode: 6
+      - m_Target: {fileID: 194934406}
+        m_TargetAssemblyTypeName: UnlockAllButtons, Assembly-CSharp
+        m_MethodName: UnlockAll
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

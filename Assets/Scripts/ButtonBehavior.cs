@@ -104,6 +104,20 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
                 buttonText.text = "RT";
                 buttonText.fontSize = 14;
                 break;
+            case "LEFT_THUMB":
+                buttonText.text = "LJ";
+                buttonText.fontSize = 14;
+                break;
+            case "RIGHT_THUMB":
+                buttonText.text = "RJ";
+                buttonText.fontSize = 14;
+                break;
+            case "BACK":
+                buttonText.text = "<";
+                break;
+            case "START":
+                buttonText.text = "=";
+                break;
             default:
                 buttonText.text = buttonFunction;
                 break;

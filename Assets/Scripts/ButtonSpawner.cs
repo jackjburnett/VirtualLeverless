@@ -51,4 +51,11 @@ public class ButtonSpawner : MonoBehaviour
         foreach (var button in _spawnedButtons) Destroy(button.gameObject);
         _spawnedButtons.Clear();
     }
+
+    public void UpdateAllButtonSizes(float size)
+    {
+        foreach (var button in _spawnedButtons)
+            if (button != null)
+                button.SetButtonSize(size);
+    }
 }

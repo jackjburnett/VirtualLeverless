@@ -7,7 +7,10 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 {
     public TMP_Text buttonText;
     public string buttonFunction;
+    public float buttonSize = 30f;
+    public float fontRatio = 0.8f;
     public SendViaUDP udpSender;
+    public float initialFontSize = 24f;
 
     private RectTransform _buttonTransform;
     private Canvas _canvas;
@@ -25,6 +28,7 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         // Get the RectTransform component
         _buttonTransform = GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
+        SetButtonSize(buttonSize);
         Lock(false);
     }
 
@@ -90,27 +94,27 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
                 break;
             case "LEFT_SHOULDER":
                 buttonText.text = "LB";
-                buttonText.fontSize = 14;
+                fontRatio = 0.5f;
                 break;
             case "RIGHT_SHOULDER":
                 buttonText.text = "RB";
-                buttonText.fontSize = 14;
+                fontRatio = 0.5f;
                 break;
             case "LEFT_TRIGGER":
                 buttonText.text = "LT";
-                buttonText.fontSize = 14;
+                fontRatio = 0.5f;
                 break;
             case "RIGHT_TRIGGER":
                 buttonText.text = "RT";
-                buttonText.fontSize = 14;
+                fontRatio = 0.5f;
                 break;
             case "LEFT_THUMB":
                 buttonText.text = "LJ";
-                buttonText.fontSize = 14;
+                fontRatio = 0.5f;
                 break;
             case "RIGHT_THUMB":
                 buttonText.text = "RJ";
-                buttonText.fontSize = 14;
+                fontRatio = 0.5f;
                 break;
             case "BACK":
                 buttonText.text = "<";
@@ -121,6 +125,22 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
             default:
                 buttonText.text = buttonFunction;
                 break;
+        }
+
+        SetButtonSize(buttonSize);
+    }
+
+    public void SetButtonSize(float size)
+    {
+        if (_buttonTransform != null)
+        {
+            buttonSize = size;
+            _buttonTransform.sizeDelta = new Vector2(size, size);
+            buttonText.fontSize = size * fontRatio;
+        }
+        else
+        {
+            Debug.LogError("Button RectTransform is null.");
         }
     }
 }

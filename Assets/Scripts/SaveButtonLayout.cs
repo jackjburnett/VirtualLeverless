@@ -55,7 +55,9 @@ public class SaveButtonLayout : MonoBehaviour
         }
 
         var json = JsonUtility.ToJson(layout, true); // Pretty print
-        var path = Path.Combine(Application.persistentDataPath, "buttonLayout.json");
+        var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        var fileName = $"ButtonLayout_{timestamp}.json";
+        var path = Path.Combine(Application.persistentDataPath, fileName);
 
         File.WriteAllText(path, json);
 

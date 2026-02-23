@@ -10,7 +10,6 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     public float buttonSize = 30f;
     public float fontRatio = 0.8f;
     public SendViaUDP udpSender;
-    public float initialFontSize = 24f;
 
     private RectTransform _buttonTransform;
     private Canvas _canvas;

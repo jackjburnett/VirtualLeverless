@@ -34,8 +34,8 @@ public class ButtonSpawner : MonoBehaviour
         buttonBehavior.udpSender = udpServer.GetComponent<SendViaUDP>();
 
         var buttonTransform = button.GetComponent<RectTransform>();
-        buttonTransform.anchoredPosition = new Vector2(x, y); // ✅ Set position
-        buttonBehavior.SetButtonSize(size); // ✅ Set size
+        buttonTransform.anchoredPosition = new Vector2(x, y); 
+        buttonBehavior.SetButtonSize(size); 
 
         _spawnedButtons.Add(buttonBehavior); // Store button reference
 

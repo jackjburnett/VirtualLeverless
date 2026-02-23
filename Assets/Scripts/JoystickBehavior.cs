@@ -4,16 +4,16 @@ using UnityEngine.EventSystems;
 
 public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public TMP_Text buttonText;          // Optional label on joystick
-    public string joystickFunction;
-    public float buttonSize = 30f;
+    public TMP_Text joystickText; // Optional label on joystick
+    public string joystickName = "LEFT_JOYSTICK";
+    public float joystickSize = 60f;
     public float fontRatio = 0.5f;
     public SendViaUDP udpSender;
-
-    private RectTransform _rectTransform;
     private Canvas _canvas;
     private Vector2 _inputDirection;
     private bool _isLocked = true; // default locked
+
+    private RectTransform _rectTransform;
 
     private void Awake()
     {
@@ -27,17 +27,8 @@ public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler
         else
             Debug.LogError("EventSystem GameObject not found.");
 
-        SetButtonSize(buttonSize);
+        SetJoystickSize(joystickSize);
         Lock(false);
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (_isLocked)
-        {
-            UpdateInput(eventData);
-            SendUDP();
-        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -50,8 +41,17 @@ public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler
         else
         {
             // Move joystick around canvas if unlocked
-            Vector2 delta = eventData.delta / _canvas.scaleFactor;
+            var delta = eventData.delta / _canvas.scaleFactor;
             _rectTransform.anchoredPosition += delta;
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (_isLocked)
+        {
+            UpdateInput(eventData);
+            SendUDP();
         }
     }
 
@@ -70,8 +70,8 @@ public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 _rectTransform, eventData.position, eventData.pressEventCamera, out localPoint))
         {
-            float x = Mathf.Clamp(localPoint.x / (_rectTransform.sizeDelta.x / 2), -1f, 1f);
-            float y = Mathf.Clamp(localPoint.y / (_rectTransform.sizeDelta.y / 2), -1f, 1f);
+            var x = Mathf.Clamp(localPoint.x / (_rectTransform.sizeDelta.x / 2), -1f, 1f);
+            var y = Mathf.Clamp(localPoint.y / (_rectTransform.sizeDelta.y / 2), -1f, 1f);
             _inputDirection = new Vector2(x, y);
         }
     }
@@ -80,7 +80,8 @@ public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         if (udpSender != null)
         {
-            string message = $"{joystickFunction}:{_inputDirection.x:F2},{_inputDirection.y:F2}";
+            // Send in the format LEFT_JOYSTICK_x_y
+            var message = $"{joystickName}_{_inputDirection.x:F2}_{_inputDirection.y:F2}";
             udpSender.SendMessage(message);
         }
     }
@@ -97,38 +98,38 @@ public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler
     }
 
     // Set joystick prefab size
-    public void SetButtonSize(float size)
+    public void SetJoystickSize(float size)
     {
-        buttonSize = size;
+        joystickSize = size;
         if (_rectTransform != null)
             _rectTransform.sizeDelta = new Vector2(size, size);
-        if (buttonText != null)
-            buttonText.fontSize = size * fontRatio;
+        if (joystickText != null)
+            joystickText.fontSize = size * fontRatio;
     }
 
     // Set joystick type / label
     public void SetJoystickFunction(string functionName)
     {
-        joystickFunction = functionName.ToUpper();
+        joystickName = functionName.ToUpper();
 
-        if (buttonText == null) return;
+        if (joystickText == null) return;
 
-        switch (joystickFunction)
+        switch (joystickName)
         {
             case "LEFT_JOYSTICK":
-                buttonText.text = "LJ";
+                joystickText.text = "LJ";
                 fontRatio = 0.5f;
                 break;
             case "RIGHT_JOYSTICK":
-                buttonText.text = "RJ";
+                joystickText.text = "RJ";
                 fontRatio = 0.5f;
                 break;
             default:
-                buttonText.text = joystickFunction;
-                fontRatio = 0.8f;
+                joystickText.text = joystickName;
+                fontRatio = 0.5f;
                 break;
         }
 
-        SetButtonSize(buttonSize);
+        SetJoystickSize(joystickSize);
     }
 }

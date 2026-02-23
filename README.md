@@ -10,8 +10,6 @@ Layouts created using this software can be used to control a Windows PC over Wi-
 using [VirtualLeverless Receiver](https://jackjburnett.github.io/VirtualLeverlessReceiver/). 
 Instructions on how to do so, and how to use the VirtualLeverless software can be found below.
 
-Saved 
-
 ## Creating Layouts
 To be completed
 

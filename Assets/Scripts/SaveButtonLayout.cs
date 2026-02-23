@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -9,6 +10,7 @@ public class ButtonData
     public string function;
     public float x;
     public float y;
+    public float size;
 }
 
 [Serializable]
@@ -22,9 +24,15 @@ public class SaveButtonLayout : MonoBehaviour
     public ButtonSpawner buttonSpawner;
     public RectTransform panel; // Assign the panel in the inspector
 
-    private string GetFilePath()
+    private string GetMostRecentLayoutFile()
     {
-        return Path.Combine(Application.persistentDataPath, "buttonLayout.json");
+        var directory = Application.persistentDataPath;
+        var layoutFiles = Directory.GetFiles(directory, "ButtonLayout_*.json");
+        
+        if (layoutFiles.Length == 0)
+            return null;
+            
+        return layoutFiles.OrderByDescending(File.GetLastWriteTime).First();
     }
 
     public void SaveLayout()
@@ -50,7 +58,8 @@ public class SaveButtonLayout : MonoBehaviour
             {
                 function = button.buttonFunction,
                 x = localPosition.x,
-                y = localPosition.y
+                y = localPosition.y,
+                size = button.buttonSize
             });
         }
 
@@ -66,11 +75,11 @@ public class SaveButtonLayout : MonoBehaviour
 
     public void LoadLayout()
     {
-        var path = GetFilePath();
+        var path = GetMostRecentLayoutFile();
 
-        if (!File.Exists(path))
+        if (path == null)
         {
-            Debug.LogError("Save file not found!");
+            Debug.LogError("No layout save files found!");
             return;
         }
 
@@ -87,8 +96,7 @@ public class SaveButtonLayout : MonoBehaviour
         buttonSpawner.ClearAllButtons();
 
         foreach (var buttonData in layout.buttons)
-            // ✅ Now we pass X, Y position directly
-            buttonSpawner.SpawnButton(buttonData.function, buttonSpawner.gameObject, buttonData.x, buttonData.y);
+            buttonSpawner.SpawnButton(buttonData.function, buttonSpawner.gameObject, buttonData.x, buttonData.y, buttonData.size);
 
         Debug.Log("Layout loaded successfully!");
     }

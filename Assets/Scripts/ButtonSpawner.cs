@@ -8,7 +8,7 @@ public class ButtonSpawner : MonoBehaviour
 
     private readonly List<ButtonBehavior> _spawnedButtons = new();
 
-    public void SpawnButton(string buttonFunction, GameObject udpServer, float x = 0, float y = 0)
+    public void SpawnButton(string buttonFunction, GameObject udpServer, float x = 0, float y = 0, float size = 30f)
     {
         if (buttonPrefab == null || panel == null)
         {
@@ -35,6 +35,7 @@ public class ButtonSpawner : MonoBehaviour
 
         var buttonTransform = button.GetComponent<RectTransform>();
         buttonTransform.anchoredPosition = new Vector2(x, y); // ✅ Set position
+        buttonBehavior.SetButtonSize(size); // ✅ Set size
 
         _spawnedButtons.Add(buttonBehavior); // Store button reference
 

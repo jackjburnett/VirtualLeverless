@@ -8,7 +8,7 @@ public class JoystickSpawner : MonoBehaviour
 
     private readonly List<JoystickBehavior> _spawnedJoysticks = new();
 
-    public void SpawnJoystick(string joystickFunction, GameObject udpServer, float x = 0, float y = 0, float size = 60f)
+    public void SpawnJoystick(string joystickFunction, GameObject udpServer, float x = 0, float y = 0, float size = 30f)
     {
         if (joystickPrefab == null || panel == null)
         {

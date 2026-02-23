@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public TMP_Text joystickText; // Optional label on joystick
-    public string joystickName = "LEFT_JOYSTICK";
-    public float joystickSize = 60f;
+    public string joystickName;
+    public float joystickSize = 30f;
     public float fontRatio = 0.5f;
     public SendViaUDP udpSender;
     private Canvas _canvas;

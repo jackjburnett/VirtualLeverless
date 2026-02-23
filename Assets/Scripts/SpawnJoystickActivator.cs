@@ -15,7 +15,7 @@ public class SpawnJoystickActivator : MonoBehaviour
     public void OnButtonClick()
     {
         if (joystickSpawner != null && sendViaUDP != null)
-            // Spawn joystick at default position (0,0) with default size (60)
+            // Spawn joystick at default position (0,0)
             joystickSpawner.SpawnJoystick(joystickBehaviorValue, sendViaUDP.gameObject);
         else
             Debug.LogError("JoystickSpawner or SendViaUDP reference is missing!");

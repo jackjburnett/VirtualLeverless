@@ -1926,7 +1926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c68277bc73a29849aeb85df0857ebed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystickPrefab: {fileID: 0}
+  joystickPrefab: {fileID: 3747362529647748268, guid: 0cb319271760c4c4ab9179c60f7c0f0d, type: 3}
   panel: {fileID: 1519666922}
 --- !u!114 &194934414
 MonoBehaviour:

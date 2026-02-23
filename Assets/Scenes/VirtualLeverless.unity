@@ -1704,13 +1704,17 @@ GameObject:
   - component: {fileID: 194934400}
   - component: {fileID: 194934403}
   - component: {fileID: 194934405}
-  - component: {fileID: 194934404}
-  - component: {fileID: 194934407}
-  - component: {fileID: 194934406}
-  - component: {fileID: 194934408}
-  - component: {fileID: 194934409}
-  - component: {fileID: 194934410}
   - component: {fileID: 194934411}
+  - component: {fileID: 194934404}
+  - component: {fileID: 194934409}
+  - component: {fileID: 194934413}
+  - component: {fileID: 194934410}
+  - component: {fileID: 194934412}
+  - component: {fileID: 194934407}
+  - component: {fileID: 194934415}
+  - component: {fileID: 194934406}
+  - component: {fileID: 194934414}
+  - component: {fileID: 194934408}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1855,7 +1859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  panel: {fileID: 1519666922}
+  joystickSpawner: {fileID: 194934413}
 --- !u!114 &194934409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1896,6 +1900,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2cc6f8e30f60347a10943727293f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &194934412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8005a128e2e5f4cb5943589054271c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickSpawner: {fileID: 194934413}
+  sizeInputField: {fileID: 1393509146}
+--- !u!114 &194934413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c68277bc73a29849aeb85df0857ebed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickPrefab: {fileID: 0}
+  panel: {fileID: 1519666922}
+--- !u!114 &194934414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dae393409937c14babee70961b7f0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickSpawner: {fileID: 194934413}
+--- !u!114 &194934415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194934399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c8b000235fad845acffe6a08848e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickSpawner: {fileID: 194934413}
 --- !u!1 &247977168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3848,9 +3906,9 @@ GameObject:
   - component: {fileID: 882841771}
   - component: {fileID: 882841770}
   - component: {fileID: 882841769}
-  - component: {fileID: 882841768}
+  - component: {fileID: 882841772}
   m_Layer: 6
-  m_Name: RIGHT_THUMB
+  m_Name: RIGHT_JOYSTICK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3876,21 +3934,6 @@ RectTransform:
   m_AnchoredPosition: {x: -7.5, y: -11.3}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &882841768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 882841766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
-  buttonBehaviorValue: RIGHT_THUMB
 --- !u!114 &882841769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3935,8 +3978,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 882841768}
-        m_TargetAssemblyTypeName: SpawnButtonActivator, Assembly-CSharp
+      - m_Target: {fileID: 882841772}
+        m_TargetAssemblyTypeName: SpawnJoystickActivator, Assembly-CSharp
         m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
@@ -3985,6 +4028,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 882841766}
   m_CullTransparentMesh: 1
+--- !u!114 &882841772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882841766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f3d8bd176e11542ad1e6a53975d839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickSpawner: {fileID: 194934413}
+  sendViaUDP: {fileID: 194934403}
+  joystickBehaviorValue: RIGHT_JOYSTICK
 --- !u!1 &883607401
 GameObject:
   m_ObjectHideFlags: 0
@@ -5014,6 +5072,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 194934410}
         m_TargetAssemblyTypeName: ResizeButtonHandler, Assembly-CSharp
+        m_MethodName: OnResizeClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 194934412}
+        m_TargetAssemblyTypeName: ResizeJoystickHandler, Assembly-CSharp
         m_MethodName: OnResizeClicked
         m_Mode: 1
         m_Arguments:
@@ -6124,9 +6194,9 @@ GameObject:
   - component: {fileID: 1212258221}
   - component: {fileID: 1212258220}
   - component: {fileID: 1212258219}
-  - component: {fileID: 1212258218}
+  - component: {fileID: 1212258222}
   m_Layer: 6
-  m_Name: LEFT_THUMB
+  m_Name: LEFT_JOYSTICK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6152,21 +6222,6 @@ RectTransform:
   m_AnchoredPosition: {x: -22.5, y: -11.300003}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1212258218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212258216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe71ac1ae6374814b94962c6d5e3cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
-  buttonBehaviorValue: LEFT_THUMB
 --- !u!114 &1212258219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6211,8 +6266,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1212258218}
-        m_TargetAssemblyTypeName: SpawnButtonActivator, Assembly-CSharp
+      - m_Target: {fileID: 1212258222}
+        m_TargetAssemblyTypeName: SpawnJoystickActivator, Assembly-CSharp
         m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
@@ -6261,6 +6316,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212258216}
   m_CullTransparentMesh: 1
+--- !u!114 &1212258222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212258216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f3d8bd176e11542ad1e6a53975d839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickSpawner: {fileID: 194934413}
+  sendViaUDP: {fileID: 194934403}
+  joystickBehaviorValue: LEFT_JOYSTICK
 --- !u!1 &1226658065
 GameObject:
   m_ObjectHideFlags: 0
@@ -7501,6 +7571,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 194934413}
+        m_TargetAssemblyTypeName: JoystickSpawner, Assembly-CSharp
+        m_MethodName: ClearAllJoysticks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1376753371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7624,6 +7706,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 194934407}
         m_TargetAssemblyTypeName: LockAllButtons, Assembly-CSharp
+        m_MethodName: LockAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 194934415}
+        m_TargetAssemblyTypeName: LockAllJoysticks, Assembly-CSharp
         m_MethodName: LockAll
         m_Mode: 1
         m_Arguments:
@@ -8400,6 +8494,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 194934406}
         m_TargetAssemblyTypeName: UnlockAllButtons, Assembly-CSharp
+        m_MethodName: UnlockAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 194934414}
+        m_TargetAssemblyTypeName: UnlockAllJoysticks, Assembly-CSharp
         m_MethodName: UnlockAll
         m_Mode: 1
         m_Arguments:

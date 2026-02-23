@@ -14,63 +14,76 @@ public class ButtonData
 }
 
 [Serializable]
-public class ButtonLayout
+public class JoystickData
+{
+    public string function;
+    public float x;
+    public float y;
+    public float size;
+}
+
+[Serializable]
+public class ControlsLayout
 {
     public List<ButtonData> buttons = new();
+    public List<JoystickData> joysticks = new();
 }
 
 public class SaveButtonLayout : MonoBehaviour
 {
     public ButtonSpawner buttonSpawner;
-    public RectTransform panel; // Assign the panel in the inspector
+    public JoystickSpawner joystickSpawner;
 
     private string GetMostRecentLayoutFile()
     {
         var directory = Application.persistentDataPath;
-        var layoutFiles = Directory.GetFiles(directory, "ButtonLayout_*.json");
-        
+        var layoutFiles = Directory.GetFiles(directory, "ControlsLayout_*.json");
+
         if (layoutFiles.Length == 0)
             return null;
-            
+
         return layoutFiles.OrderByDescending(File.GetLastWriteTime).First();
     }
 
     public void SaveLayout()
     {
+        var layout = new ControlsLayout();
+
+        // Save buttons
         var buttons = buttonSpawner.GetSpawnedButtons();
-
-        if (buttons.Count == 0)
-        {
-            Debug.LogWarning("No buttons available to save.");
-            return;
-        }
-
-        var layout = new ButtonLayout();
-
         foreach (var button in buttons)
         {
-            var buttonTransform = button.GetComponent<RectTransform>();
-
-            // Convert position to local space relative to the panel
-            var localPosition = buttonTransform.anchoredPosition;
-
+            var rect = button.GetComponent<RectTransform>();
             layout.buttons.Add(new ButtonData
             {
                 function = button.buttonFunction,
-                x = localPosition.x,
-                y = localPosition.y,
+                x = rect.anchoredPosition.x,
+                y = rect.anchoredPosition.y,
                 size = button.buttonSize
             });
         }
 
-        var json = JsonUtility.ToJson(layout, true); // Pretty print
+        // Save joysticks
+        var joysticks = joystickSpawner.GetSpawnedJoysticks();
+        foreach (var joystick in joysticks)
+        {
+            var rect = joystick.GetComponent<RectTransform>();
+            layout.joysticks.Add(new JoystickData
+            {
+                function = joystick.joystickName,
+                x = rect.anchoredPosition.x,
+                y = rect.anchoredPosition.y,
+                size = joystick.joystickSize
+            });
+        }
+
+        var json = JsonUtility.ToJson(layout, true);
         var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-        var fileName = $"ButtonLayout_{timestamp}.json";
+        var fileName = $"ControlsLayout_{timestamp}.json";
         var path = Path.Combine(Application.persistentDataPath, fileName);
 
         File.WriteAllText(path, json);
-
-        Debug.Log($"Layout saved to: {path}");
+        Debug.Log($"Controls layout saved to: {path}");
     }
 
     public void LoadLayout()
@@ -79,25 +92,31 @@ public class SaveButtonLayout : MonoBehaviour
 
         if (path == null)
         {
-            Debug.LogError("No layout save files found!");
+            Debug.LogError("No controls layout save files found!");
             return;
         }
 
         var json = File.ReadAllText(path);
-        var layout = JsonUtility.FromJson<ButtonLayout>(json);
+        var layout = JsonUtility.FromJson<ControlsLayout>(json);
 
-        if (layout == null || layout.buttons.Count == 0)
+        if (layout == null)
         {
-            Debug.LogError("Invalid or empty layout data!");
+            Debug.LogError("Invalid controls layout data!");
             return;
         }
 
-        // Clear existing buttons before loading new ones
+        // Clear existing controls
         buttonSpawner.ClearAllButtons();
+        joystickSpawner.ClearAllJoysticks();
 
-        foreach (var buttonData in layout.buttons)
-            buttonSpawner.SpawnButton(buttonData.function, buttonSpawner.gameObject, buttonData.x, buttonData.y, buttonData.size);
+        // Spawn buttons
+        foreach (var data in layout.buttons)
+            buttonSpawner.SpawnButton(data.function, buttonSpawner.gameObject, data.x, data.y, data.size);
 
-        Debug.Log("Layout loaded successfully!");
+        // Spawn joysticks
+        foreach (var data in layout.joysticks)
+            joystickSpawner.SpawnJoystick(data.function, joystickSpawner.gameObject, data.x, data.y, data.size);
+
+        Debug.Log("Controls layout loaded successfully!");
     }
 }

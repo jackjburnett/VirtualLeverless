@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnlockAllButtons : MonoBehaviour
@@ -7,7 +6,7 @@ public class UnlockAllButtons : MonoBehaviour
 
     public void UnlockAll()
     {
-        List<ButtonBehavior> buttons = buttonSpawner.GetSpawnedButtons();
+        var buttons = buttonSpawner.GetSpawnedButtons();
 
         if (buttons.Count == 0)
         {
@@ -15,10 +14,8 @@ public class UnlockAllButtons : MonoBehaviour
             return;
         }
 
-        foreach (var button in buttons)
-        {
-            button.Lock(false); // Unlock all buttons
-        }
+        foreach (var button in buttons) button.Lock(false); // Unlock all buttons
+
 
         Debug.Log("All buttons are now unlocked.");
     }

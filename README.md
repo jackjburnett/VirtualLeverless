@@ -2,11 +2,12 @@
 VirtualLeverless is an open-source application that allows you to create and modify custom 'Leverless' controller layouts, 
 much like a virtual [hitbox](https://github.com/jfedor2/flatbox). 
 
-The [current release](https://github.com/jackjburnett/VirtualLeverless/releases/tag/v0.3) is available on 
-[Android (Tablet)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.3/Android.apk),
+The [current release](https://github.com/jackjburnett/VirtualLeverless/releases/tag/v0.4) is available on 
+[Android (Tablet)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4/Android.apk),
 [Android (Phone)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.3m/AndroidPhone.apk),
 [iOS (Unbuilt)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.3m/iOS.zip),
-and [Windows](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.3/Windows.zip).
+[Linux](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4/Linux.zip),
+and [Windows](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4/Windows.zip).
 
 Layouts created using this software can be used to control a Windows PC over Wi-Fi, 
 using [VirtualLeverless Receiver](https://jackjburnett.github.io/VirtualLeverlessReceiver/). 

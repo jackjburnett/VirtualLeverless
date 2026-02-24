@@ -4,8 +4,8 @@ much like a virtual [hitbox](https://github.com/jfedor2/flatbox).
 
 The [current release](https://github.com/jackjburnett/VirtualLeverless/releases/tag/v0.4) is available on 
 [Android (Tablet)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4/Android.apk),
-[Android (Phone)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.3m/AndroidPhone.apk),
-[iOS (Unbuilt)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.3m/iOS.zip),
+[Android (Phone)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4m/AndroidPhone.apk),
+[iOS (Unbuilt)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4m/iOS.zip),
 [Linux](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4/Linux.zip),
 and [Windows](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4/Windows.zip).
 

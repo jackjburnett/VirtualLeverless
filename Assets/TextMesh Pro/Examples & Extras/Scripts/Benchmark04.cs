@@ -1,10 +1,14 @@
 using UnityEngine;
+using System.Collections;
+
 
 namespace TMPro.Examples
 {
+
     public class Benchmark04 : MonoBehaviour
     {
-        public int SpawnType;
+
+        public int SpawnType = 0;
 
         public int MinPointSize = 12;
         public int MaxPointSize = 64;
@@ -15,34 +19,33 @@ namespace TMPro.Examples
         //public Material material;
 
 
-        private void Start()
+        void Start()
         {
             m_Transform = transform;
 
             float lineHeight = 0;
-            var orthoSize = Camera.main.orthographicSize = Screen.height / 2;
-            var ratio = (float)Screen.width / Screen.height;
+            float orthoSize = Camera.main.orthographicSize = Screen.height / 2;
+            float ratio = (float)Screen.width / Screen.height;
 
-            for (var i = MinPointSize; i <= MaxPointSize; i += Steps)
+            for (int i = MinPointSize; i <= MaxPointSize; i += Steps)
+            {
                 if (SpawnType == 0)
                 {
                     // TextMesh Pro Implementation
-                    var go = new GameObject("Text - " + i + " Pts");
+                    GameObject go = new GameObject("Text - " + i + " Pts");
 
                     if (lineHeight > orthoSize * 2) return;
 
-                    go.transform.position = m_Transform.position +
-                                            new Vector3(ratio * -orthoSize * 0.975f, orthoSize * 0.975f - lineHeight,
-                                                0);
+                    go.transform.position = m_Transform.position + new Vector3(ratio * -orthoSize * 0.975f, orthoSize * 0.975f - lineHeight, 0);
 
-                    var textMeshPro = go.AddComponent<TextMeshPro>();
+                    TextMeshPro textMeshPro = go.AddComponent<TextMeshPro>();
 
                     //textMeshPro.fontSharedMaterial = material;
                     //textMeshPro.font = Resources.Load("Fonts & Materials/LiberationSans SDF", typeof(TextMeshProFont)) as TextMeshProFont;
                     //textMeshPro.anchor = AnchorPositions.Left;
                     textMeshPro.rectTransform.pivot = new Vector2(0, 0.5f);
 
-                    textMeshPro.enableWordWrapping = false;
+                    textMeshPro.textWrappingMode = TextWrappingModes.NoWrap;
                     textMeshPro.extraPadding = true;
                     textMeshPro.isOrthographic = true;
                     textMeshPro.fontSize = i;
@@ -52,9 +55,11 @@ namespace TMPro.Examples
 
                     lineHeight += i;
                 }
-            // TextMesh Implementation
-            // Causes crashes since atlas needed exceeds 4096 X 4096
-            /*
+                else
+                {
+                    // TextMesh Implementation
+                    // Causes crashes since atlas needed exceeds 4096 X 4096
+                    /*
                     GameObject go = new GameObject("Arial " + i);
 
                     //if (lineHeight > orthoSize * 2 * 0.9f) return;
@@ -72,6 +77,9 @@ namespace TMPro.Examples
 
                     lineHeight += i;
                     */
+                }
+            }
         }
+
     }
 }

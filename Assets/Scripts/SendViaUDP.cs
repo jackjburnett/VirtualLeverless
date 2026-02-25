@@ -1,44 +1,57 @@
 using System;
-using System.Net.Sockets;
 using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
+using NativeWebSocket;
 
 public class SendViaUDP : MonoBehaviour
 {
-    public TMP_InputField[] serverIPInputFields;
-    public TMP_InputField portInputField;
+    public TMP_InputField[] serverIPInputFields; // 4 fields for IP octets
+    public TMP_InputField portInputField; // Port input
 
-    [FormerlySerializedAs("OnSendMessageRequested")]
-    public UnityEvent<string> onSendMessageRequested; // Event to trigger message sending
+    public UnityEvent<string> onSendMessageRequested;
+    private int _port;
+    private string _serverIP;
 
-    private int _port = 8080; // UDP port number for communication
-    private string _serverIP; // Server IP address
+    private WebSocket ws;
 
-    private UdpClient _udpClient;
-
-
-    private void Start()
+    private async void Start()
     {
-        // Create UdpClient
-        _udpClient = new UdpClient();
+        if (onSendMessageRequested == null)
+            onSendMessageRequested = new UnityEvent<string>();
 
         onSendMessageRequested.AddListener(SendMessage);
     }
 
-    private void OnApplicationQuit()
+    private void Update()
     {
-        // Close the UDP client when the application quits
-        if (_udpClient != null) _udpClient.Close();
+#if !UNITY_WEBGL || UNITY_EDITOR
+        ws?.DispatchMessageQueue();
+#endif
     }
 
-    public new void SendMessage(string message)
+    private async void OnApplicationQuit()
     {
-        // Update serverIP from the input fields
+        if (ws != null)
+            await ws.Close();
+    }
+
+    private bool IsValidIP(string[] ipParts)
+    {
+        foreach (var part in ipParts)
+            if (!int.TryParse(part, out var value) || value < 0 || value > 255)
+                return false;
+        return true;
+    }
+
+    public async void SendMessage(string message)
+    {
+        // 1️⃣ Read IP from input fields
         var ipParts = new string[4];
-        for (var i = 0; i < 4; i++) ipParts[i] = serverIPInputFields[i].text;
+        for (var i = 0; i < 4; i++)
+            ipParts[i] = serverIPInputFields[i].text;
+
         _serverIP = string.Join(".", ipParts);
 
         if (!IsValidIP(ipParts) || !int.TryParse(portInputField.text, out _port))
@@ -47,32 +60,34 @@ public class SendViaUDP : MonoBehaviour
             return;
         }
 
+        var url = $"ws://{_serverIP}:{_port}";
+
         try
         {
-            // Create message
-            var data = Encoding.ASCII.GetBytes(message);
+            // 2️⃣ Connect if not connected
+            if (ws == null || ws.State != WebSocketState.Open)
+            {
+                ws = new WebSocket(url);
 
-            // Send message to the server
-            _udpClient.Send(data, data.Length, _serverIP, _port);
-            Debug.Log($"Sent {message} to {_serverIP}:{_port}");
+                ws.OnOpen += () => Debug.Log("WebSocket connection opened!");
+                ws.OnError += e => Debug.LogError($"WebSocket Error: {e}");
+                ws.OnClose += e => Debug.Log("WebSocket closed!");
+                ws.OnMessage += bytes =>
+                {
+                    var receivedMessage = Encoding.UTF8.GetString(bytes);
+                    Debug.Log("Received: " + receivedMessage);
+                };
+
+                await ws.Connect();
+            }
+
+            // 3️⃣ Send the message
+            await ws.SendText(message);
+            Debug.Log($"Sent: {message} to {_serverIP}:{_port}");
         }
-        catch (SocketException e)
+        catch (Exception e)
         {
-            Debug.LogError("SocketException: " + e.Message);
+            Debug.LogError($"WebSocket Exception: {e.Message}");
         }
-        catch (Exception e) // Ensure to use System.Exception
-        {
-            Debug.LogError("Exception: " + e.Message);
-        }
-    }
-
-
-    private bool IsValidIP(string[] ipParts)
-    {
-        foreach (var part in ipParts)
-            if (!int.TryParse(part, out var value) || value < 0 || value > 255)
-                return false;
-
-        return true;
     }
 }

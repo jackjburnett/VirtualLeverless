@@ -7,12 +7,10 @@ using NativeWebSocket;
 
 public class SendViaUDP : MonoBehaviour
 {
-    public TMP_InputField[] serverIPInputFields; // 4 fields for IP octets
-    public TMP_InputField portInputField; // Port input
+    [Header("Server Domain Input (e.g., example.trycloudflare.com)")]
+    public TMP_InputField serverDomainInput;
 
     public UnityEvent<string> onSendMessageRequested;
-    private int _port;
-    private string _serverIP;
 
     private WebSocket ws;
 
@@ -37,34 +35,24 @@ public class SendViaUDP : MonoBehaviour
             await ws.Close();
     }
 
-    private bool IsValidIP(string[] ipParts)
-    {
-        foreach (var part in ipParts)
-            if (!int.TryParse(part, out var value) || value < 0 || value > 255)
-                return false;
-        return true;
-    }
-
     public async void SendMessage(string message)
     {
-        // 1️⃣ Read IP from input fields
-        var ipParts = new string[4];
-        for (var i = 0; i < 4; i++)
-            ipParts[i] = serverIPInputFields[i].text;
-
-        _serverIP = string.Join(".", ipParts);
-
-        if (!IsValidIP(ipParts) || !int.TryParse(portInputField.text, out _port))
+        if (string.IsNullOrWhiteSpace(serverDomainInput.text))
         {
-            Debug.LogError("Invalid IP address or port number");
+            Debug.LogError("Server domain is empty!");
             return;
         }
 
-        var url = $"ws://{_serverIP}:{_port}";
+        // Prepend protocol depending on platform
+#if UNITY_WEBGL && !UNITY_EDITOR
+        string url = $"wss://{serverDomainInput.text}";
+#else
+        string url = $"ws://{serverDomainInput.text}";
+#endif
 
         try
         {
-            // 2️⃣ Connect if not connected
+            // Connect if not connected
             if (ws == null || ws.State != WebSocketState.Open)
             {
                 ws = new WebSocket(url);
@@ -81,9 +69,9 @@ public class SendViaUDP : MonoBehaviour
                 await ws.Connect();
             }
 
-            // 3️⃣ Send the message
+            // Send the message
             await ws.SendText(message);
-            Debug.Log($"Sent: {message} to {_serverIP}:{_port}");
+            Debug.Log($"Sent: {message} to {url}");
         }
         catch (Exception e)
         {

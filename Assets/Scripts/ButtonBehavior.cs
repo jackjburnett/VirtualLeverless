@@ -51,7 +51,7 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
             if (udpSender != null)
             {
                 udpSender.onSendMessageRequested.Invoke(buttonFunction + "_PRESS");
-                HapticManager.TriggerHaptic(0.5f);
+                HapticManager.TriggerHaptic(0.1f);
             }
             else
             {

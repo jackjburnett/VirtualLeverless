@@ -34,6 +34,9 @@ public class ButtonSpawner : MonoBehaviour
         // Set the udp server game object
         buttonBehavior.webSocket = udpServer.GetComponent<SendViaWebSocket>();
 
+        // Set the spawner
+        buttonBehavior.spawner = this;
+
         var buttonTransform = button.GetComponent<RectTransform>();
         buttonTransform.anchoredPosition = new Vector2(x, y);
         buttonBehavior.SetButtonSize(size);
@@ -61,7 +64,7 @@ public class ButtonSpawner : MonoBehaviour
 
     public void ClearAllButtons()
     {
-        foreach (var button in _spawnedButtons) button.DeleteButton();
+        for (var i = _spawnedButtons.Count - 1; i >= 0; i--) _spawnedButtons[i].DeleteButton();
         _spawnedButtons.Clear();
     }
 

@@ -27,6 +27,7 @@ public class JoystickSpawner : MonoBehaviour
 
         joystickBehavior.SetJoystickFunction(joystickFunction);
         joystickBehavior.webSocketSender = udpServer.GetComponent<SendViaWebSocket>();
+        joystickBehavior.spawner = this;
 
         var rectTransform = joystick.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(x, y);
@@ -54,8 +55,7 @@ public class JoystickSpawner : MonoBehaviour
 
     public void ClearAllJoysticks()
     {
-        foreach (var joystick in _spawnedJoysticks)
-            joystick.DeleteJoystick();
+        for (var i = _spawnedJoysticks.Count - 1; i >= 0; i--) _spawnedJoysticks[i].DeleteJoystick();
         _spawnedJoysticks.Clear();
     }
 

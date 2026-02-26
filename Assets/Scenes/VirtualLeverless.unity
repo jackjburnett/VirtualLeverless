@@ -3173,7 +3173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: LEFT_SHOULDER
 --- !u!114 &848244565
 MonoBehaviour:
@@ -3553,7 +3553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickSpawner: {fileID: 194934413}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   joystickBehaviorValue: RIGHT_JOYSTICK
 --- !u!1 &883607401
 GameObject:
@@ -4779,7 +4779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: BACK
 --- !u!114 &1084956909
 MonoBehaviour:
@@ -4928,7 +4928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: LEFT_TRIGGER
 --- !u!114 &1161251808
 MonoBehaviour:
@@ -5077,7 +5077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: RIGHT_TRIGGER
 --- !u!114 &1175072620
 MonoBehaviour:
@@ -5226,7 +5226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: X
 --- !u!114 &1189891979
 MonoBehaviour:
@@ -5606,7 +5606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickSpawner: {fileID: 194934413}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   joystickBehaviorValue: LEFT_JOYSTICK
 --- !u!1 &1226658065
 GameObject:
@@ -5798,7 +5798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: B
 --- !u!114 &1250497951
 MonoBehaviour:
@@ -6221,7 +6221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: DPAD_LEFT
 --- !u!114 &1325838201
 MonoBehaviour:
@@ -8246,7 +8246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: DPAD_DOWN
 --- !u!114 &1549115875
 MonoBehaviour:
@@ -8489,7 +8489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: A
 --- !u!1 &1641687409
 GameObject:
@@ -8861,7 +8861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: Y
 --- !u!114 &1754126047
 MonoBehaviour:
@@ -9716,7 +9716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: DPAD_UP
 --- !u!114 &1992364070
 MonoBehaviour:
@@ -9940,7 +9940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: START
 --- !u!114 &2033851786
 MonoBehaviour:
@@ -10221,7 +10221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: DPAD_RIGHT
 --- !u!114 &2063684935
 MonoBehaviour:
@@ -10370,7 +10370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawner: {fileID: 194934409}
-  sendViaUDP: {fileID: 194934403}
+  sendViaWebSocket: {fileID: 194934403}
   buttonBehaviorValue: RIGHT_SHOULDER
 --- !u!114 &2098306917
 MonoBehaviour:

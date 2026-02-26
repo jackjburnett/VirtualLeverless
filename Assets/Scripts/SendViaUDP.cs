@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Text;
+using System.Threading.Tasks;
+using NativeWebSocket;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using NativeWebSocket;
 
 public class SendViaUDP : MonoBehaviour
 {
@@ -29,13 +31,22 @@ public class SendViaUDP : MonoBehaviour
 #endif
     }
 
-    private async void OnApplicationQuit()
+    private void OnApplicationQuit()
     {
         if (ws != null)
-            await ws.Close();
+            StartCoroutine(CloseWebSocketCoroutine());
     }
 
-    public async void SendMessage(string message)
+    private IEnumerator CloseWebSocketCoroutine()
+    {
+        var closeTask = ws.Close();
+        while (!closeTask.IsCompleted)
+            yield return null;
+
+        ws = null;
+    }
+
+    private async void SendMessage(string message)
     {
         if (string.IsNullOrWhiteSpace(serverDomainInput.text))
         {
@@ -45,15 +56,15 @@ public class SendViaUDP : MonoBehaviour
 
         // Prepend protocol depending on platform
 #if UNITY_WEBGL && !UNITY_EDITOR
-        string url = $"wss://{serverDomainInput.text}";
+    string url = $"wss://{serverDomainInput.text}";
 #else
-        string url = $"ws://{serverDomainInput.text}";
+        var url = $"ws://{serverDomainInput.text}";
 #endif
 
         try
         {
-            // Connect if not connected
-            if (ws == null || ws.State != WebSocketState.Open)
+            // Only create and connect once
+            if (ws == null)
             {
                 ws = new WebSocket(url);
 
@@ -66,8 +77,12 @@ public class SendViaUDP : MonoBehaviour
                     Debug.Log("Received: " + receivedMessage);
                 };
 
-                await ws.Connect();
+                await ws.Connect(); // wait for connection to open
             }
+
+            // Wait until the socket is open before sending
+            while (ws.State != WebSocketState.Open)
+                await Task.Yield();
 
             // Send the message
             await ws.SendText(message);

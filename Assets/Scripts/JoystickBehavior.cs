@@ -82,7 +82,7 @@ public class JoystickBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler
         {
             // Send in the format LEFT_JOYSTICK_x_y
             var message = $"{joystickName}_{_inputDirection.x:F2}_{_inputDirection.y:F2}";
-            udpSender.SendMessage(message);
+            udpSender.onSendMessageRequested.Invoke(message);
         }
     }
 

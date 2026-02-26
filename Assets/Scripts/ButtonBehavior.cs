@@ -57,7 +57,14 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        udpSender.onSendMessageRequested.Invoke(buttonFunction + "_RELEASE");
+        if (_isLocked)
+        {
+            // Send a message over UDP with the button function name and "_RELEASE" appended
+            if (udpSender != null)
+                udpSender.onSendMessageRequested.Invoke(buttonFunction + "_RELEASE");
+            else
+                Debug.LogError("udpSender is null.");
+        }
     }
 
     public void Lock(bool lockState)

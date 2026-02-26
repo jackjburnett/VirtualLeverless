@@ -6,7 +6,7 @@ public class SpawnButtonActivator : MonoBehaviour
     public ButtonSpawner buttonSpawner;
 
     // Reference to the SendViaUDP script attached to the EventSystem
-    public SendViaUDP sendViaUDP;
+    public SendViaWebSocket sendViaWebSocket;
 
     // Reference to the button behavior value
     public string buttonBehaviorValue;
@@ -15,6 +15,6 @@ public class SpawnButtonActivator : MonoBehaviour
     public void OnButtonClick()
     {
         // Call the SpawnButton method of the ButtonSpawner script
-        buttonSpawner.SpawnButton(buttonBehaviorValue, sendViaUDP.gameObject);
+        buttonSpawner.SpawnButton(buttonBehaviorValue, sendViaWebSocket.gameObject);
     }
 }

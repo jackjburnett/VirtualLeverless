@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ButtonSpawner : MonoBehaviour
@@ -31,15 +32,26 @@ public class ButtonSpawner : MonoBehaviour
         buttonBehavior.SetButtonFunction(buttonFunction);
 
         // Set the udp server game object
-        buttonBehavior.udpSender = udpServer.GetComponent<SendViaUDP>();
+        buttonBehavior.webSocket = udpServer.GetComponent<SendViaWebSocket>();
 
         var buttonTransform = button.GetComponent<RectTransform>();
-        buttonTransform.anchoredPosition = new Vector2(x, y); 
-        buttonBehavior.SetButtonSize(size); 
+        buttonTransform.anchoredPosition = new Vector2(x, y);
+        buttonBehavior.SetButtonSize(size);
 
-        _spawnedButtons.Add(buttonBehavior); // Store button reference
+        RegisterButton(buttonBehavior); // Store button reference
 
         Debug.Log($"Button spawned with function: {buttonFunction}");
+    }
+
+    private void RegisterButton(ButtonBehavior button)
+    {
+        if (!_spawnedButtons.Contains(button))
+            _spawnedButtons.Add(button);
+    }
+
+    public void UnregisterButton(ButtonBehavior button)
+    {
+        _spawnedButtons.Remove(button);
     }
 
     public List<ButtonBehavior> GetSpawnedButtons()
@@ -49,14 +61,13 @@ public class ButtonSpawner : MonoBehaviour
 
     public void ClearAllButtons()
     {
-        foreach (var button in _spawnedButtons) Destroy(button.gameObject);
+        foreach (var button in _spawnedButtons) button.DeleteButton();
         _spawnedButtons.Clear();
     }
 
     public void UpdateAllButtonSizes(float size)
     {
-        foreach (var button in _spawnedButtons)
-            if (button != null)
-                button.SetButtonSize(size);
+        foreach (var button in _spawnedButtons.Where(button => button != null))
+            button.SetButtonSize(size);
     }
 }

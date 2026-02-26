@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SpawnJoystickActivator : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class SpawnJoystickActivator : MonoBehaviour
     public JoystickSpawner joystickSpawner;
 
     // Reference to the SendViaUDP script attached to the EventSystem
-    public SendViaUDP sendViaUDP;
+    [FormerlySerializedAs("sendViaUDP")] public SendViaWebSocket sendViaWebSocket;
 
     // The joystick function value (e.g., LEFT_JOYSTICK or RIGHT_JOYSTICK)
     public string joystickBehaviorValue;
@@ -14,9 +15,9 @@ public class SpawnJoystickActivator : MonoBehaviour
     // Called when the UI button is clicked
     public void OnButtonClick()
     {
-        if (joystickSpawner != null && sendViaUDP != null)
+        if (joystickSpawner != null && sendViaWebSocket != null)
             // Spawn joystick at default position (0,0)
-            joystickSpawner.SpawnJoystick(joystickBehaviorValue, sendViaUDP.gameObject);
+            joystickSpawner.SpawnJoystick(joystickBehaviorValue, sendViaWebSocket.gameObject);
         else
             Debug.LogError("JoystickSpawner or SendViaUDP reference is missing!");
     }

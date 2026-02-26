@@ -34,15 +34,12 @@ public class SaveButtonLayout : MonoBehaviour
     public ButtonSpawner buttonSpawner;
     public JoystickSpawner joystickSpawner;
 
-    private string GetMostRecentLayoutFile()
+    private static string GetMostRecentLayoutFile()
     {
         var directory = Application.persistentDataPath;
         var layoutFiles = Directory.GetFiles(directory, "ControlsLayout_*.json");
 
-        if (layoutFiles.Length == 0)
-            return null;
-
-        return layoutFiles.OrderByDescending(File.GetLastWriteTime).First();
+        return layoutFiles.Length == 0 ? null : layoutFiles.OrderByDescending(File.GetLastWriteTime).First();
     }
 
     public void SaveLayout()
@@ -56,10 +53,10 @@ public class SaveButtonLayout : MonoBehaviour
             var rect = button.GetComponent<RectTransform>();
             layout.buttons.Add(new ButtonData
             {
-                function = button.buttonFunction,
+                function = button.GetButtonFunction(),
                 x = rect.anchoredPosition.x,
                 y = rect.anchoredPosition.y,
-                size = button.buttonSize
+                size = button.GetButtonSize()
             });
         }
 
@@ -70,10 +67,10 @@ public class SaveButtonLayout : MonoBehaviour
             var rect = joystick.GetComponent<RectTransform>();
             layout.joysticks.Add(new JoystickData
             {
-                function = joystick.joystickName,
+                function = joystick.GetJoystickFunction(),
                 x = rect.anchoredPosition.x,
                 y = rect.anchoredPosition.y,
-                size = joystick.joystickSize
+                size = joystick.GetJoystickSize()
             });
         }
 

@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public TMP_Text buttonText;
-    public string buttonFunction;
-    public float buttonSize = 30f;
-    public float fontRatio = 0.8f;
-    public SendViaUDP udpSender;
+    public SendViaWebSocket webSocket;
+    public ButtonSpawner spawner;
 
+    private string _buttonFunction;
+    private float _buttonSize = 30f;
     private RectTransform _buttonTransform;
     private Canvas _canvas;
+    private float _fontRatio = 0.8f;
+    private float _hapticStrength = 0.5f;
+    private bool _isHapticEnabled;
     private bool _isLocked;
 
     private void Awake()
@@ -20,56 +23,50 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         // Check if the EventSystem GameObject exists
         var eventSystem = GameObject.Find("EventSystem");
         if (eventSystem != null)
-            udpSender = eventSystem.GetComponent<SendViaUDP>();
+            webSocket = eventSystem.GetComponent<SendViaWebSocket>();
         else
             Debug.LogError("EventSystem GameObject not found.");
 
         // Get the RectTransform component
         _buttonTransform = GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
-        SetButtonSize(buttonSize);
+        SetButtonSize(_buttonSize);
         Lock(false);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!_isLocked)
-        {
-            // Get the delta movement of the pointer
-            var delta = eventData.delta / _canvas.scaleFactor;
+        if (_isLocked) return;
+        // Get the delta movement of the pointer
+        var delta = eventData.delta / _canvas.scaleFactor;
 
-            // Move the button to the new position
-            _buttonTransform.anchoredPosition += delta;
-        }
+        // Move the button to the new position
+        _buttonTransform.anchoredPosition += delta;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (_isLocked)
+        if (!_isLocked) return;
+        // Send a message over WebSocket with the button function name and "_PRESS" appended
+        if (webSocket != null)
         {
-            // Send a message over UDP with the button function name and "_PRESS" appended
-            if (udpSender != null)
-            {
-                udpSender.onSendMessageRequested.Invoke(buttonFunction + "_PRESS");
-                HapticManager.TriggerHaptic(0.1f);
-            }
-            else
-            {
-                Debug.LogError("udpSender is null.");
-            }
+            webSocket.onSendMessageRequested.Invoke(_buttonFunction + "_PRESS");
+            if (_isHapticEnabled) HapticManager.TriggerHaptic(_hapticStrength);
+        }
+        else
+        {
+            Debug.LogError("webSocket is null.");
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (_isLocked)
-        {
-            // Send a message over UDP with the button function name and "_RELEASE" appended
-            if (udpSender != null)
-                udpSender.onSendMessageRequested.Invoke(buttonFunction + "_RELEASE");
-            else
-                Debug.LogError("udpSender is null.");
-        }
+        if (!_isLocked) return;
+        // Send a message over WebSocket with the button function name and "_RELEASE" appended
+        if (webSocket != null)
+            webSocket.onSendMessageRequested.Invoke(_buttonFunction + "_RELEASE");
+        else
+            Debug.LogError("webSocket is null.");
     }
 
     public void Lock(bool lockState)
@@ -84,12 +81,17 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         _isLocked = !_isLocked;
     }
 
+    public bool GetLockState()
+    {
+        return _isLocked;
+    }
+
     public void SetButtonFunction(string functionName)
     {
-        buttonFunction = functionName;
+        _buttonFunction = functionName;
 
         // Assign text based on function name
-        switch (buttonFunction.ToUpper())
+        switch (_buttonFunction.ToUpper())
         {
             case "DPAD_LEFT":
                 buttonText.text = "←";
@@ -105,27 +107,27 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
                 break;
             case "LEFT_SHOULDER":
                 buttonText.text = "LB";
-                fontRatio = 0.5f;
+                _fontRatio = 0.5f;
                 break;
             case "RIGHT_SHOULDER":
                 buttonText.text = "RB";
-                fontRatio = 0.5f;
+                _fontRatio = 0.5f;
                 break;
             case "LEFT_TRIGGER":
                 buttonText.text = "LT";
-                fontRatio = 0.5f;
+                _fontRatio = 0.5f;
                 break;
             case "RIGHT_TRIGGER":
                 buttonText.text = "RT";
-                fontRatio = 0.5f;
+                _fontRatio = 0.5f;
                 break;
             case "LEFT_THUMB":
                 buttonText.text = "LJ";
-                fontRatio = 0.5f;
+                _fontRatio = 0.5f;
                 break;
             case "RIGHT_THUMB":
                 buttonText.text = "RJ";
-                fontRatio = 0.5f;
+                _fontRatio = 0.5f;
                 break;
             case "BACK":
                 buttonText.text = "<";
@@ -134,24 +136,65 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
                 buttonText.text = "=";
                 break;
             default:
-                buttonText.text = buttonFunction;
+                buttonText.text = _buttonFunction;
                 break;
         }
 
-        SetButtonSize(buttonSize);
+        SetButtonSize(_buttonSize);
+    }
+
+    public string GetButtonFunction()
+    {
+        return _buttonFunction;
     }
 
     public void SetButtonSize(float size)
     {
         if (_buttonTransform != null)
         {
-            buttonSize = size;
+            _buttonSize = size;
             _buttonTransform.sizeDelta = new Vector2(size, size);
-            buttonText.fontSize = size * fontRatio;
+            buttonText.fontSize = size * _fontRatio;
         }
         else
         {
             Debug.LogError("Button RectTransform is null.");
         }
+    }
+
+    public float GetFontRatio()
+    {
+        return _fontRatio;
+    }
+
+    public float GetButtonSize()
+    {
+        return _buttonSize;
+    }
+
+    public void SetHapticStrength(float strength)
+    {
+        _hapticStrength = strength;
+    }
+
+    public float GetHapticStrength()
+    {
+        return _hapticStrength;
+    }
+
+    public void SetHapticEnabled(bool haptic)
+    {
+        _isHapticEnabled = haptic;
+    }
+
+    public bool GetHapticEnabled()
+    {
+        return _isHapticEnabled;
+    }
+
+    public void DeleteButton()
+    {
+        spawner.UnregisterButton(this);
+        Destroy(gameObject);
     }
 }

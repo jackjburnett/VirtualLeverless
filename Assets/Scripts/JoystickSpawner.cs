@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class JoystickSpawner : MonoBehaviour
@@ -25,14 +26,25 @@ public class JoystickSpawner : MonoBehaviour
         }
 
         joystickBehavior.SetJoystickFunction(joystickFunction);
-        joystickBehavior.udpSender = udpServer.GetComponent<SendViaUDP>();
+        joystickBehavior.webSocketSender = udpServer.GetComponent<SendViaWebSocket>();
 
         var rectTransform = joystick.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(x, y);
         joystickBehavior.SetJoystickSize(size);
 
-        _spawnedJoysticks.Add(joystickBehavior);
+        RegisterJoystick(joystickBehavior);
         Debug.Log($"Joystick spawned with function: {joystickFunction}");
+    }
+
+    private void RegisterJoystick(JoystickBehavior joystick)
+    {
+        if (!_spawnedJoysticks.Contains(joystick))
+            _spawnedJoysticks.Add(joystick);
+    }
+
+    public void UnregisterJoystick(JoystickBehavior joystick)
+    {
+        _spawnedJoysticks.Remove(joystick);
     }
 
     public List<JoystickBehavior> GetSpawnedJoysticks()
@@ -43,13 +55,13 @@ public class JoystickSpawner : MonoBehaviour
     public void ClearAllJoysticks()
     {
         foreach (var joystick in _spawnedJoysticks)
-            Destroy(joystick.gameObject);
+            joystick.DeleteJoystick();
         _spawnedJoysticks.Clear();
     }
 
     public void UpdateAllJoystickSizes(float size)
     {
-        foreach (var joystick in _spawnedJoysticks)
+        foreach (var joystick in _spawnedJoysticks.Where(joystick => joystick != null))
             joystick.SetJoystickSize(size);
     }
 }

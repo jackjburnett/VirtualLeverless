@@ -2,16 +2,11 @@
 VirtualLeverless is an open-source application that allows you to create and modify custom 'Leverless' controller layouts, 
 much like a virtual [hitbox](https://github.com/jfedor2/flatbox). 
 
-The [current release](https://github.com/jackjburnett/VirtualLeverless/releases/tag/v0.5) is available on 
-[Android (Tablet)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.5/Android.apk),
-[Android (Phone)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.5/AndroidPhone.apk),
-[iOS (Unbuilt)](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.4m/iOS.zip),
-[Linux](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.5/Linux.zip),
-and [Windows](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.5/Windows.zip).
-
-Layouts created using this software can be used to control a Windows PC over Wi-Fi, 
-using [VirtualLeverless Receiver](https://jackjburnett.github.io/VirtualLeverlessReceiver/). 
-Instructions on how to do so, and how to use the VirtualLeverless software can be found below.
+The [current release](https://github.com/jackjburnett/VirtualLeverless/releases/tag/v0.6) is available on 
+[Android](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.6/Android.apk),
+[Linux](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.6/Linux.zip),
+[Windows](https://github.com/jackjburnett/VirtualLeverless/releases/download/v0.6/Windows.zip),
+and [as a Web App](https://jackjburnett.github.io/VirtualLeverless/).
 
 ## Creating Layouts
 To be completed
@@ -24,8 +19,10 @@ You can also access AppData by entering '%APPDATA%' into the Windows Run dialog 
 
 ### Android
 Saved layouts on Android can be found at STORAGE_LOCATION/Android/data/jackjburnett.VirtualLeverless/files. This folder may
-only be accessible when using a file manager app, or when connecting to the device using a computer.
+only accessible when using a file manager app or when connecting to the device from a computer.
 
-## Connecting to a PC (with VirtualLeverless Receiver)
+## Connecting to a PC
+Connecting to a PC requires the host PC to have [VirtualLeverless Receiver](https://github.com/jackjburnett/VirtualLeverlessReceiver) v1.4+ cloned.
+
 To be completed
 

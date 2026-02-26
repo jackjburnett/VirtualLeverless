@@ -54,12 +54,7 @@ public class SendViaUDP : MonoBehaviour
             return;
         }
 
-        // Prepend protocol depending on platform
-#if UNITY_WEBGL && !UNITY_EDITOR
-    string url = $"wss://{serverDomainInput.text}";
-#else
-        var url = $"ws://{serverDomainInput.text}";
-#endif
+        var url = $"wss://{serverDomainInput.text}";
 
         try
         {

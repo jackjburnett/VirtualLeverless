@@ -49,9 +49,14 @@ public class ButtonBehavior : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         {
             // Send a message over UDP with the button function name and "_PRESS" appended
             if (udpSender != null)
+            {
                 udpSender.onSendMessageRequested.Invoke(buttonFunction + "_PRESS");
+                HapticManager.TriggerHaptic(0.5f);
+            }
             else
+            {
                 Debug.LogError("udpSender is null.");
+            }
         }
     }
 

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class ThemeManager : MonoBehaviour
 {
     public ThemeColours themeColours;
-    public Image background;
+    public BackgroundManager backgroundManager;
+
     public TextMeshProUGUI[] texts;
     public Button[] buttons;
     public TextMeshProUGUI[] buttonTexts;
@@ -29,11 +30,12 @@ public class ThemeManager : MonoBehaviour
 
     private void UpdateTheme()
     {
-        var currentThemeColours = _isDarkMode ? themeColours.DarkThemeColours : themeColours.LightThemeColours;
+        var currentThemeColours =
+            _isDarkMode ? themeColours.GetDarkThemeColours() : themeColours.GetLightThemeColours();
 
         // Update background colour
         if (currentThemeColours.TryGetValue("background", out var backgroundColour))
-            background.color = backgroundColour;
+            backgroundManager.SetBackgroundColour(backgroundColour);
 
         // Update text colours
         if (currentThemeColours.TryGetValue("text", out var textColour))
